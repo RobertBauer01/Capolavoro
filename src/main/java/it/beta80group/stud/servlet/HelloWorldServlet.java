@@ -1,14 +1,15 @@
 package it.beta80group.stud.servlet;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import it.beta80group.stud.model.TestModel;
 import it.beta80group.stud.services.HelloWorldService;
 
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.sql.SQLException;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.ServletInputStream;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -127,15 +128,17 @@ public class HelloWorldServlet extends HttpServlet {
 		logger.info("CALLED /hello/ doPut");
 		String idStr = request.getParameter("id");
 		Long id = Long.parseLong(idStr);
-		TestModel m = new TestModel();
-		m.setId(id);
-		List<TestModel> list;
-		try {
-			hwService.delete(m);
+		try(InputStream inputStream = request.getInputStream()){
+			BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
+			String json = br.readLine();
+			ObjectMapper mapper = new ObjectMapper();
+			TestModel testModel = mapper.readValue(json, TestModel.class);
+			testModel.setId(id);
+			hwService.update(testModel);
 			response.setStatus(HttpServletResponse.SC_OK);
 			PrintWriter writer = response.getWriter();
 			writer.append("OK");
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}

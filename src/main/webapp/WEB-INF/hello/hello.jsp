@@ -35,7 +35,7 @@
 
                     <!-- Nav Item - Dashboard -->
                     <li class="nav-item">
-                        <a class="nav-link" href="hello">
+                        <a class="nav-link" href="/hello">
                             <i class="fas fa-fw fa-tachometer-alt"></i>
                             <span>Test Module page</span></a>
                     </li>

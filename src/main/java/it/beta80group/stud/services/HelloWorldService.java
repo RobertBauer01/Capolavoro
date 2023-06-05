@@ -47,4 +47,8 @@ public class HelloWorldService  {
     public void delete(TestModel m) throws SQLException {
         Testdao.delete(m);
     }
+
+    public void update(TestModel testModel) throws SQLException {
+        Testdao.update(testModel);
+    }
 }

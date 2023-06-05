@@ -18,6 +18,7 @@ import java.util.List;
 *
 * */
 public class Testdao {
+    private static final String UPDATE_QUERY = "UPDATE tt SET tt.username = ?, tt.password = ? FROM dbo.testtable tt WHERE id = ?";
     private static final String SAVE_QUERY = "INSERT INTO dbo.testtable(username, password) VALUES(?, ?)";
     private static final String GET_ALL_QUERY = "SELECT * FROM dbo.testtable";
     private static final String GET_BY_ID_QUERY = "SELECT * FROM dbo.testtable WHERE id = ?";
@@ -60,6 +61,16 @@ public class Testdao {
         }
         connection.close();
         return result;
+    }
+
+    public static void update(TestModel testModel) throws SQLException {
+        Connection connection = DataSource.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_QUERY);
+        preparedStatement.setString(1, testModel.getUsername());
+        preparedStatement.setString(2, testModel.getPassword());
+        preparedStatement.setLong(3, testModel.getId());
+        preparedStatement.execute();
+        connection.close();
     }
 
     static class TestModelResultSetMapper extends ResultSetMapper<TestModel>{

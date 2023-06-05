@@ -35,7 +35,7 @@
 
                     <!-- Nav Item - Dashboard -->
                     <li class="nav-item">
-                        <a class="nav-link" href="hello">
+                        <a class="nav-link" href="/hello">
                             <i class="fas fa-fw fa-tachometer-alt"></i>
                             <span>Test Module page</span></a>
                     </li>
@@ -170,7 +170,7 @@
             }
 
             function onClickPut(evt){
-                var _btnId = $(this).attr('id');
+                var _btnId = $('#id').val();
                 var real_url = doPutUrl + "?id=" + _btnId;
                 spinner_on();
                 var data = {
