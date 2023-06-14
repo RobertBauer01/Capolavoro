@@ -149,7 +149,7 @@
                                                     <td>${user_model.surname}</td>
                                                     <td>${user_model.dt}</td>
                                                     <td>
-                                                        <a id="${user_model.idUser}" class="btn btn-primary delete_button" href="#"><i class="fa fa-trash"></i> Delete</a>
+                                                        <a id="${user_model.idUser}" class="btn btn-primary delete_button" href=""><i class="fa fa-trash"></i> Delete</a>
                                                         <a class="btn btn-primary" href="/users/${user_model.idUser}"><i class="fa fa-eye"></i> Details</a>
                                                     </td>
                                                 </tr>
@@ -354,12 +354,12 @@ document.getElementById("addEmployeeButton").style.display = "block";
                     function(s){
                         console.log(s);
                         console.log("done");
-                        location.reload()
+                        window.location.href = '/users';
                     },
                     function(err){
                         console.log(err);
                         console.log("fail");
-                        location.reload()
+                        window.location.href = '/users';
                     });
 
             }
