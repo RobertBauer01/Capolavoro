@@ -26,7 +26,17 @@ public class TaskService {
         return INSTANCE;
     }
 
-
+    public void save(String title, String description, String imgSrc, String link, Long status, Long orderCol) throws SQLException {
+        logger.info("CALLED save({},{},{},{},{},{},{})", title, description, imgSrc, link, status, orderCol);
+        Task model = new Task();
+        model.setTitle(title);
+        model.setDescription(description);
+        model.setImageSrc(imgSrc);
+        model.setLink(link);
+        model.setStatus(status);
+        model.setOrderCol(orderCol);
+        Taskdao.save(model);
+    }
     public Task getById(Long id) throws SQLException {
         Task byId = Taskdao.getById(id);
         return byId;
@@ -38,9 +48,5 @@ public class TaskService {
     }
     public void update(Task testModel) throws SQLException {
         Taskdao.update(testModel);
-    }
-
-    public void save(Task testModel) throws SQLException {
-        Taskdao.save(testModel);
     }
 }
