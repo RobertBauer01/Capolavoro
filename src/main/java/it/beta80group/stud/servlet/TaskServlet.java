@@ -26,13 +26,13 @@ public class TaskServlet extends HttpServlet {
 	final Logger logger = LogManager.getLogger(TaskServlet.class);
 	private static final long serialVersionUID = 1L;
 	private TaskService tkService;
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public TaskServlet() {
-        super();
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public TaskServlet() {
+		super();
 		tkService = TaskService.getInstance();
-    }
+	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -92,22 +92,26 @@ public class TaskServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,  IOException {
 		logger.info("CALLED /task/ doPost");
-		String idStr = request.getParameter("idTask");
-		Long id = Long.parseLong(idStr);
-		try(InputStream inputStream = request.getInputStream()){
-			BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
-			String json = br.readLine();
-			ObjectMapper mapper = new ObjectMapper();
-			Task testModel = mapper.readValue(json, Task.class);
-			testModel.setIdTask(id);
-			tkService.save(testModel);
-			response.setStatus(HttpServletResponse.SC_OK);
-			PrintWriter writer = response.getWriter();
-			writer.append("OK");
-		} catch (Exception e) {
-			e.printStackTrace();
+		String title = request.getParameter("title");
+		String description = request.getParameter("description");
+		String imgSrc = request.getParameter("imgSrc");
+		String link = request.getParameter("link");
+		String statusStr = request.getParameter("status");
+		Long status = null;
+		if (statusStr != null && !statusStr.isEmpty()) {
+			status = Long.valueOf(statusStr);
+		}
+		Long orderCol = Long.valueOf(request.getParameter("orderCol"));
+		List<Task> list;
+		try {
+			tkService.save(title, description, imgSrc, link, status, orderCol);
+			list = tkService.list();
+			request.setAttribute("task_list", list);
+		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/tasks/task.jsp");
+		dispatcher.forward(request, response);
 	}
 
 	@Override
