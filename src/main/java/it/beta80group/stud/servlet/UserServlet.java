@@ -1,5 +1,7 @@
 package it.beta80group.stud.servlet;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import it.beta80group.stud.model.TestModel;
 import it.beta80group.stud.model.User;
 import it.beta80group.stud.services.UserService;
 import org.apache.logging.log4j.LogManager;
@@ -11,8 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -50,6 +51,8 @@ public class UserServlet extends HttpServlet {
 		else{
 			Long id = Long.parseLong(pathInfo.split("/")[1]);
 			logger.info("CALLED /users/{} doGet", id);
+
+			details(id, request, response);
 		}
 	}
 
@@ -59,7 +62,7 @@ public class UserServlet extends HttpServlet {
 		try {
 			user = usService.getById(id);
 			if(user != null){
-				dispatcher = request.getRequestDispatcher("/WEB-INF/user/user_details.jsp");
+				dispatcher = request.getRequestDispatcher("/WEB-INF/users/users_details.jsp");
 				request.setAttribute("user_model", user);
 			}
 			else{
@@ -137,6 +140,26 @@ public class UserServlet extends HttpServlet {
 			PrintWriter writer = response.getWriter();
 			writer.append("OK");
 		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@Override
+	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		logger.info("CALLED /users/ doPut");
+		String idStr = request.getParameter("idUser");
+		Long id = Long.parseLong(idStr);
+		try(InputStream inputStream = request.getInputStream()){
+			BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
+			String json = br.readLine();
+			ObjectMapper mapper = new ObjectMapper();
+			User user = mapper.readValue(json, User.class);
+			user.setIdUser(id);
+			usService.update(user);
+			response.setStatus(HttpServletResponse.SC_OK);
+			PrintWriter writer = response.getWriter();
+			writer.append("OK");
+		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
