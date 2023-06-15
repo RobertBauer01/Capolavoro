@@ -7,11 +7,14 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- Boxicons CSS -->
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
     <title>Cruscotto HR - users-details</title>
     <link rel="stylesheet" href="/static/css/style.css" type="text/css"/>
     <link rel="icon" href="/static/img/beta80favicon.png" type="image/x-icon">
     <link rel="shortcut icon" href="./img/beta80favicon.png" type="image/x-icon">
+    <link href="/static/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="/static/css/app.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 </head>
 <body>
@@ -20,7 +23,7 @@
 <nav class="navbar">
     <div class="logo_item">
         <i class="bx bx-menu" id="sidebarOpen"></i>
-        <button type="button" class="image-button-nav" onclick="goToHomePage()">
+        <button type="button" class="image-button-nav" onclick="goToUsersPage()">
             <img src="/static/img/beta80favicon.png" alt="Immagine Bottone"> </i>Home Page
         </button>
     </div>
@@ -75,7 +78,7 @@
             <li class="item">
             </li>
             <li class="item">
-                <a href="#" class="nav_link">
+                <a onclick="goToUsersPage()" class="nav_link">
               <span class="navlink_icon">
                 <i class="bx bx-medal"></i>
               </span>
@@ -84,7 +87,7 @@
             </li>
 
             <li class="item">
-                <a href="#" class="nav_link">
+                <a onclick="goToTaskPage()" class="nav_link">
               <span class="navlink_icon">
                 <i class="bx bx-layer"></i>
               </span>
@@ -114,50 +117,57 @@
         </div>
     </div>
 </nav>
+ <h1 class="color-employee">Edit users</h1>
+<br>
 
-                        <div class="container-fluid">
-                            <div class="row">
-                            <form class="form" action="users" method="post">
-                                <div class="form-group">
-                                    <label for="idUser">ID</label>
-                                    <input id="idUser" type="text" name="idUser" class="form-control id_record" value="${user_model.idUser}" disabled>
-                                </div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3"></div> <!-- Spazio a sinistra -->
+        <div class="col-md-6"> <!-- Contenitore del modulo -->
+            <form class="form" action="users" method="post">
+                <div class="form-group">
+                    <label for="idUser">ID</label>
+                    <input id="id" type="text" name="idUser" class="form-control id_record" value="${user_model.idUser}" disabled>
+                </div>
 
-                                <div class="form-group">
-                                    <label for="username">Username</label>
-                                    <input id="username" type="text" name="username" class="form-control" value="${user_model.username}" disabled>
-                                </div>
-                                <div class="form-group">
-                                    <label for="password">Password</label>
-                                    <input id="password" type="text" name="password" class="form-control" value="${user_model.password}" disabled>
-                                </div>
-                                <div class="form-group">
-                                     <label for="rl">Role</label>
-                                     <input id="rl" type="number" name="rl" class="form-control" value="${user_model.rl}" disabled>
-                                </div>
-                                <div class="form-group">
-                                     <label for="name">Name</label>
-                                     <input id="name" type="text" name="name" class="form-control" value="${user_model.name}" disabled>
-                                </div>
-                                <div class="form-group">
-                                     <label for="surname">Surname</label>
-                                     <input id="surname" type="text" name="surname" class="form-control" value="${user_model.surname}" disabled>
-                                </div>
-                                <div class="form-group">
-                                     <label for="dt">Date</label>
-                                     <input id="dt" type="date" name="dt" class="form-control" value="${user_model.dt}" disabled>
-                                </div>
-                                <a id="edit_btn" class="btn btn-primary" href="#"><i class="fa fa-edit"></i> Edit</a>
-                                <a id="cancel_btn" class="btn btn-primary hidden" href="#">Cancel</a>
-                                <a id="put_btn" class="btn btn-primary hidden" href="#">Submit</a>
-                            </form>
-                            </div>
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input id="username" type="text" name="username" class="form-control" value="${user_model.username}" disabled>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input id="password" type="text" name="password" class="form-control" value="${user_model.password}" disabled>
+                </div>
+                <div class="form-group">
+                    <label for="rl">Role</label>
+                    <input id="rl" type="number" name="rl" class="form-control" value="${user_model.rl}" disabled>
+                </div>
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input id="name" type="text" name="name" class="form-control" value="${user_model.name}" disabled>
+                </div>
+                <div class="form-group">
+                    <label for="surname">Surname</label>
+                    <input id="surname" type="text" name="surname" class="form-control" value="${user_model.surname}" disabled>
+                </div>
+                <div class="form-group">
+                    <label for="dt">Date</label>
+                    <input id="dt" type="date" name="dt" class="form-control" value="${user_model.dt}" disabled>
+                </div>
+                <br>
+                <a id="edit_btn" class="btn btn-primary" href="#"><i class="fa fa-edit"></i> Edit</a>
+                <a id="cancel_btn" class="btn btn-primary hidden" href="#">Cancel</a>
+                <a id="put_btn" class="btn btn-primary hidden" href="#">Submit</a>
+                <button type="button" class="btn btn-primary" onclick="goToUsersPage()" style="float: right;">Back</button>
+            </form>
+        </div>
+        <div class="col-md-3"></div> <!-- Spazio a destra -->
+    </div>
+</div>
 
-
-                        </div>
 
 <!-- JavaScript -->
-<script src="/static/js/app/users/users.js"></script>
+<script src="/static/js/app/script/script.js"></script>
 <script>
         function toggleDropdown() {
             var dropdownContent = document.getElementById("myDropdown");
@@ -170,8 +180,14 @@
 </script>
 
 <script>
-    function goToHomePage() {
+    function goToUsersPage() {
         window.location.href = '/users';
+    }
+</script>
+
+<script>
+    function goToTaskPage() {
+        window.location.href = '/task';
     }
 </script>
 
@@ -218,9 +234,6 @@ document.getElementById("addEmployeeButton").style.display = "block";
         <script src="/static/js/bootstrap.min.js" ></script>
         <script src="/static/js/sb-admin-2.min.js" ></script>
         <script src="/static/js/app/app_utils.js"></script>
-
-<!-- Page JS -->
-<script src="/static/js/app/users/users.js"></script>
 
         <script>
             var doPutUrl = "/users";

@@ -7,6 +7,9 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- Boxicons CSS -->
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="/static/css/app.css" rel="stylesheet">
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
     <title>Cruscotto HR - users</title>
     <link rel="stylesheet" href="/static/css/style.css" type="text/css"/>
@@ -20,7 +23,7 @@
 <nav class="navbar">
     <div class="logo_item">
         <i class="bx bx-menu" id="sidebarOpen"></i>
-        <button type="button" class="image-button-nav" onclick="goToHomePage()">
+        <button type="button" class="image-button-nav" onclick="goToUsersPage()">
             <img src="/static/img/beta80favicon.png" alt="Immagine Bottone"> </i>Home Page
         </button>
     </div>
@@ -75,7 +78,7 @@
             <li class="item">
             </li>
             <li class="item">
-                <a href="#" class="nav_link">
+                <a href="" class="nav_link">
               <span class="navlink_icon">
                 <i class="bx bx-medal"></i>
               </span>
@@ -84,7 +87,7 @@
             </li>
 
             <li class="item">
-                <a href="#" class="nav_link">
+                <a onclick="goToTaskPage()" class="nav_link">
               <span class="navlink_icon">
                 <i class="bx bx-layer"></i>
               </span>
@@ -92,7 +95,7 @@
                 </a>
             </li>
             <li class="item">
-                <a href="#" class="nav_link">
+                <a href="" class="nav_link">
               <span class="navlink_icon">
                 <i class="bx bx-cog"></i>
               </span>
@@ -137,8 +140,39 @@
                     </div>
                 </div>
 
-                <div class="employee-grid-container" id="employee-grid">
-
+            <br>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                        <table class="table">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>
+                                                                            ID
+                                                                        </th>
+                                                                        <th>
+                                                                            USERNAME
+                                                                        </th>
+                                                                        <th>
+                                                                            PASSWORD
+                                                                        </th>
+                                                                        <th>
+                                                                            ROLE
+                                                                        </th>
+                                                                        <th>
+                                                                            NAME
+                                                                        </th>
+                                                                        <th>
+                                                                            SURNAME
+                                                                        </th>
+                                                                        <th>
+                                                                            DATE
+                                                                        </th>
+                                                                        <th>
+                                                                        ACTIONS
+                                                                        </th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
                                             <c:forEach items="${users_list}" var="user_model">
                                                 <tr>
                                                     <td>${user_model.idUser}</td>
@@ -154,8 +188,11 @@
                                                     </td>
                                                 </tr>
                                             </c:forEach>
+                                    </tbody>
+                              </table>
+                           </div>
+                           </div>
 
-                </div>
 
 
                   <div id="addEmployeeForm" style="display: none;">
@@ -196,7 +233,7 @@
 </section>
 
 <!-- JavaScript -->
-<script src="/static/js/app/users/users.js"></script>
+<script src="/static/js/app/script/script.js"></script>
 <script>
         var currentDate = new Date();
 
@@ -292,8 +329,13 @@
 </script>
 
 <script>
-    function goToHomePage() {
+    function goToUsersPage() {
         window.location.href = '/users';
+    }
+</script>
+<script>
+    function goToTaskPage() {
+        window.location.href = '/task';
     }
 </script>
 
@@ -340,9 +382,6 @@ document.getElementById("addEmployeeButton").style.display = "block";
         <script src="/static/js/bootstrap.min.js" ></script>
         <script src="/static/js/sb-admin-2.min.js" ></script>
         <script src="/static/js/app/app_utils.js"></script>
-
-<!-- Page JS -->
-<script src="/static/js/app/users/users.js"></script>
 
 <script>
             var doDeleteUrl = "/users";
