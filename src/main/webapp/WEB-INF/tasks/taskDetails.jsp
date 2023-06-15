@@ -109,9 +109,9 @@
                                      <label for="status">Status</label>
                                      <div>
                                      <select id="status" onchange="gestisciSelezione()" disabled>
-                                         <option value="1">Attivo 1</option>
-                                         <option value="0">Disattivo 2</option>
-                                       </select>
+                                        <option value="1">Attivo</option>
+                                        <option value="0">Disattivo</option>
+                                     </select>
                                      </div>
 
                                 </div>
@@ -217,6 +217,8 @@
                 $("#cancel_btn").on("click", disableEdit);
                 $("#put_btn").on("click", onClickPut);
 
+                valoreStatus();
+
                 console.log( "ready!" );
             });
         </script>
@@ -224,6 +226,9 @@
             function gestisciSelezione() {
               var valoreSelezionato = document.getElementById("status").value;
               console.log("Valore selezionato: " + valoreSelezionato);
+            }
+            function valoreStatus() {
+              document.getElementById("status").value = ${task_model.status};
             }
           </script>
 </html>
