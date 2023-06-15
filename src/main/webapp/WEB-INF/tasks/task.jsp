@@ -108,12 +108,15 @@
                                         <label for="link">Link</label>
                                         <input id="link" type="text" name="link" class="form-control">
                                     </div>
-                                    <div>
-                                        <label for="status">Status</label>
-                                        <input id="status" type="text" name="status" class="form-control">
-                                    </div>
+                                   <label for="status">Status</label>
+                                                                        <div>
+                                                                        <select id="status" onchange="gestisciSelezione()" name="status">
+                                                                            <option value="1">Attivo</option>
+                                                                            <option value="0">Disattivo</option>
+                                                                          </select>
+                                                                        </div>
                                         <label for="orderCol">Priority Level</label>
-                                        <input id="orderCol" type="text" name="orderCol" class="form-control">
+                                        <input id="orderCol2" type="text" name="orderCol" class="form-control">
                                     </div>
                                     <div>
                                     <button id="post_btn" type="submit" class="btn btn-primary">Submit</button>
@@ -201,4 +204,10 @@
 
         <!-- Page JS -->
         <script src="/static/js/app/hello/hello.js"></script>
+         <script>
+                    function gestisciSelezione() {
+                      var valoreSelezionato = document.getElementById("status").value;
+                      console.log("Valore selezionato: " + valoreSelezionato);
+                    }
+                  </script>
 </html>
