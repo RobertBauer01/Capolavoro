@@ -108,15 +108,10 @@
                                         <label for="link">Link</label>
                                         <input id="link" type="text" name="link" class="form-control">
                                     </div>
-                                    <label for="status">Status</label>
-                                     <div>
-                                        <select id="status" onchange="gestisciSelezione()" >
-                                            <option value="1">Attivo 1</option>
-                                            <option value="0">Disattivo 2</option>
-                                        </select>
-                                     </div>
-
                                     <div>
+                                        <label for="status">Status</label>
+                                        <input id="status" type="text" name="status" class="form-control">
+                                    </div>
                                         <label for="orderCol">Priority Level</label>
                                         <input id="orderCol" type="text" name="orderCol" class="form-control">
                                     </div>
@@ -188,16 +183,6 @@
                     </div>
                     <!-- End of Main Content -->
 
-                    <!-- Footer -->
-                    <footer class="sticky-footer bg-white">
-                        <div class="container my-auto">
-                            <div class="copyright text-center my-auto">
-                                <span>Copyright &copy; Beta80 Group</span>
-                            </div>
-                        </div>
-                    </footer>
-                    <!-- End of Footer -->
-
                 </div>
                 <!-- End of Content Wrapper -->
 
@@ -216,42 +201,4 @@
 
         <!-- Page JS -->
         <script src="/static/js/app/hello/hello.js"></script>
-
-
-        <script>
-            var doPostUrl = "/task";
-            function onClickPost(evt){
-                spinner_on();
-                var data = {
-                title: $("#title").val(),
-                description: $("#description").val(),
-                imgSrc: $("imgSrc").val();
-                link: $("#link").val(),
-                status: $("#status").val(),
-                orderCol: $("#orderCol").val()
-
-                }
-                doPost(data, doPostUrl,
-                    function(s){
-                        console.log(s);
-                        console.log("done");
-                        location.reload()
-                    },
-                    function(err){
-                        console.log(err);
-                        console.log("fail");
-                        location.reload()
-                    });
-            }
-            $( document ).ready(function() {
-                $("#post_btn").on("click", onClickDelete);
-                console.log( "ready!" );
-            });
-        </script>
-            <script>
-                    function gestisciSelezione() {
-                      var valoreSelezionato = document.getElementById("status").value;
-                      console.log("Valore selezionato: " + valoreSelezionato);
-                    }
-                  </script>
 </html>
