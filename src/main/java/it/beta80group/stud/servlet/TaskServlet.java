@@ -54,6 +54,7 @@ public class TaskServlet extends HttpServlet {
 	}
 
 	private void details(Long id, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.getSession().removeAttribute("error");
 		Task tsk = null;
 		RequestDispatcher dispatcher = null;
 		try {
@@ -116,22 +117,26 @@ public class TaskServlet extends HttpServlet {
 
 	@Override
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		logger.info("CALLED /task/ doPut");
-		String idStr = request.getParameter("idTask");
-		Long id = Long.parseLong(idStr);
-		try(InputStream inputStream = request.getInputStream()){
-			BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
-			String json = br.readLine();
-			ObjectMapper mapper = new ObjectMapper();
-			Task testModel = mapper.readValue(json, Task.class);
-			testModel.setIdTask(id);
-			tkService.update(testModel);
-			response.setStatus(HttpServletResponse.SC_OK);
-			PrintWriter writer = response.getWriter();
-			writer.append("OK");
+		try {
+			logger.info("CALLED /task/ doPut");
+			String idStr = request.getParameter("idTask");
+			Long id = Long.parseLong(idStr);
+			try (InputStream inputStream = request.getInputStream()) {
+				BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
+				String json = br.readLine();
+				ObjectMapper mapper = new ObjectMapper();
+				Task testModel = mapper.readValue(json, Task.class);
+				testModel.setIdTask(id);
+				tkService.update(testModel);
+				response.setStatus(HttpServletResponse.SC_OK);
+				PrintWriter writer = response.getWriter();
+				writer.append("OK");
+			} catch (Exception e) {
+				e.printStackTrace();
+				throw new RuntimeException(e);
+			}
 		} catch (Exception e) {
-			e.printStackTrace();
-			throw new RuntimeException(e);
+			request.getSession().setAttribute("error", "Hai dimenticato/sbagliato un campo");
 		}
 	}
 

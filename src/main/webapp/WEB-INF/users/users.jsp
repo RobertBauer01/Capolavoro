@@ -191,10 +191,7 @@
                                     </tbody>
                               </table>
                            </div>
-                           </div>
-
-
-
+                        </div>
                   <div id="addEmployeeForm" style="display: none;">
                   <h2>Aggiungi Dipendente</h2>
                   <form class="form" action="users" method="post">

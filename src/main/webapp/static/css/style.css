@@ -473,6 +473,7 @@ display: block;
     padding: 10px;
   }
   h1 {
+
     font-size: 20px;
   }
 
@@ -505,4 +506,18 @@ display: block;
                   font-size: 18px;
                   margin-top: 20px;
               }
+
   }
+    #addEmployeeForm {
+       position: fixed;
+       top: 50%;
+       left: 50%;
+       transform: translate(-50%, -50%);
+        background-color: #f0f0f0;
+        padding: 20px;
+        width: 400px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        display: block;
+        z-index: 10000;
+        }
