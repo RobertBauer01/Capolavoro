@@ -13,7 +13,6 @@
     <link rel="stylesheet" href="/static/css/style.css" type="text/css"/>
     <link rel="icon" href="/static/img/beta80favicon.png" type="image/x-icon">
     <link rel="shortcut icon" href="./img/beta80favicon.png" type="image/x-icon">
-    <link href="/static/css/sb-admin-2.min.css" rel="stylesheet">
     <link href="/static/css/app.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 </head>
@@ -117,7 +116,6 @@
         </div>
     </div>
 </nav>
- <h1 class="color-employee">Edit users</h1>
 <br>
 
 <div class="container-fluid">
@@ -140,7 +138,10 @@
                 </div>
                 <div class="form-group">
                     <label for="rl">Role</label>
-                    <input id="rl" type="number" name="rl" class="form-control" value="${user_model.rl}" disabled>
+                    <select id="rl" onchange="gestisciSelezione()" disabled>
+                          <option value="1">DIPENDENTE</option>
+                          <option value="0">HR</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="name">Name</label>
@@ -280,6 +281,7 @@ document.getElementById("addEmployeeButton").style.display = "block";
                         console.log(err);
                         console.log("fail");
                         location.reload()
+                        window.alert("L'username esiste già nel database.");
                     });
             }
             $( document ).ready(function() {
@@ -300,6 +302,12 @@ function validateRole(input) {
     input.value = ""; // Reset il valore dell'input se non è 0 o 1
   }
 }
+</script>
+<script>
+   function gestisciSelezione() {
+       var valoreSelezionato = document.getElementById("rl").value;
+       console.log("Valore selezionato: " + valoreSelezionato);
+   }
 </script>
 </body>
 </html>
