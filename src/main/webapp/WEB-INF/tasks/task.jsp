@@ -192,7 +192,7 @@
                                                 </div>
                                                 <div>
                                                       <label for="orderCol">Priority Level</label>
-                                                      <input id="orderCol2" type="number" min="1" name="orderCol" class="form-control" required>
+                                                      <input id="orderCol2" type="number" min="1" max="100" name="orderCol" class="form-control" required>
                                                       <label for="status">Status</label>
                                                 </div>
                                                 <div>

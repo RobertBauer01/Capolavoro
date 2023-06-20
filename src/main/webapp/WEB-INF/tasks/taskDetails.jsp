@@ -129,7 +129,7 @@
       </div>
       <div class ="form-group">
          <label for="orderCol">Priority</label>
-         <input id="orderCol" type="number" min="1" name="orderCol" class="form-control" value="${task_model.orderCol}" disabled>
+         <input id="orderCol" type="number" min="1" max="100" name="orderCol" class="form-control" value="${task_model.orderCol}" disabled>
       </div>
       <div class="form-group">
          <label for="status">Status</label>
