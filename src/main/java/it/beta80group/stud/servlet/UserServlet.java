@@ -94,36 +94,43 @@ public class UserServlet extends HttpServlet {
 	 */
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Long rl = 1L;
-		LocalDate currentDate = LocalDate.now();
-		Date sqlDate = Date.valueOf(currentDate);
-		logger.info("CALLED /users/ doPost");
-		String username = request.getParameter("username");
-		String password = request.getParameter("password");
-		if (request.getParameter("rl") != null && !request.getParameter("rl").isEmpty()) {
-			rl = Long.valueOf(request.getParameter("rl"));
-		}
-		String name = request.getParameter("name");
-		String surname = request.getParameter("surname");
-		if (request.getParameter("orderCol") != null && !request.getParameter("orderCol").isEmpty()) {
-			String dateString = request.getParameter("orderCol");
-			try {
-				LocalDate parsedDate = LocalDate.parse(dateString);
-				sqlDate = Date.valueOf(parsedDate);
-			} catch (java.time.format.DateTimeParseException e) {
-				// Gestionare l'errore o lanciare un'eccezione appropriata
-			}
-		}
-		List<User> list;
+		request.getSession().removeAttribute("error");
 		try {
-			usService.save(username, password, rl, name, surname, sqlDate);
-			list = usService.list();
-			request.setAttribute("users_list", list);
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			Long rl = 1L;
+			LocalDate currentDate = LocalDate.now();
+			Date sqlDate = Date.valueOf(currentDate);
+			logger.info("CALLED /users/ doPost");
+			String username = request.getParameter("username");
+			String password = request.getParameter("password");
+			if (request.getParameter("rl") != null && !request.getParameter("rl").isEmpty()) {
+				rl = Long.valueOf(request.getParameter("rl"));
+			}
+			String name = request.getParameter("name");
+			String surname = request.getParameter("surname");
+			if (request.getParameter("orderCol") != null && !request.getParameter("orderCol").isEmpty()) {
+				String dateString = request.getParameter("orderCol");
+				try {
+					LocalDate parsedDate = LocalDate.parse(dateString);
+					sqlDate = Date.valueOf(parsedDate);
+				} catch (java.time.format.DateTimeParseException e) {
+					// Gestionare l'errore o lanciare un'eccezione appropriata
+				}
+			}
+			List<User> list;
+			try {
+				usService.save(username, password, rl, name, surname, sqlDate);
+				list = usService.list();
+				request.setAttribute("users_list", list);
+			} catch (SQLException e) {
+				throw new RuntimeException(e);
+			}
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/users/users.jsp");
+			dispatcher.forward(request, response);
+		} catch (Exception e){
+			request.getSession().setAttribute("error", e.getMessage());
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/users/users.jsp");
+			dispatcher.forward(request, response);
 		}
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/users/users.jsp");
-		dispatcher.forward(request, response);
 	}
 
 	@Override

@@ -17,20 +17,23 @@ import java.util.List;
 *
 * */
 public class Userdao {
-    private static final String UPDATE_QUERY = "UPDATE tt SET tt.username = ?, tt.password = ?, tt.name = ?, tt.surname = ? FROM dbo.Users tt WHERE id_user = ?";
+    private static final String UPDATE_QUERY = "UPDATE tt SET tt.username = ?, tt.password = ?, tt.name = ?, tt.surname = ? FROM dbo.Users as tt WHERE id_user = ?";
     private static final String GET_BY_ID_QUERY = "SELECT * FROM dbo.Users WHERE id_user = ?";
     private static final String DELETE_QUERY = "DELETE FROM dbo.Users WHERE id_user = ?";
-    private static final String SAVE_QUERY = "INSERT INTO dbo.Users(username, password, rl, name, surname, dt) VALUES(?, ?, 1, ?, ?, ?)";
-    private static final String GET_ALL_QUERY = "SELECT * FROM dbo.Users";
+    private static final String SAVE_QUERY = "INSERT INTO dbo.Users(username, password, rl, name, surname, dt) VALUES(?, ?, ?, ?, ?, ?)";
+    private static final String GET_ALL_QUERY = "SELECT * FROM dbo.Users ORDER BY surname, name";
 
-    public static void save(User model) throws SQLException {
+    public static void insert(User model) throws SQLException {
+        if (!isUsernameUnique(model.getUsername(), (long) -1)) {
+        }
         Connection connection = DataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(SAVE_QUERY);
         preparedStatement.setString(1, model.getUsername());
         preparedStatement.setString(2, model.getPassword());
-        preparedStatement.setString(3, model.getName());
-        preparedStatement.setString(4, model.getSurname());
-        preparedStatement.setDate(5, model.getDt());
+        preparedStatement.setLong(3, model.getRl());
+        preparedStatement.setString(4, model.getName());
+        preparedStatement.setString(5, model.getSurname());
+        preparedStatement.setDate(6, model.getDt());
         preparedStatement.execute();
         connection.close();
     }
@@ -69,6 +72,8 @@ public class Userdao {
     }
 
     public static void update(User user) throws SQLException {
+        if (!isUsernameUnique(user.getUsername(), user.getIdUser())) {
+        }
         Connection connection = DataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_QUERY);
         preparedStatement.setString(1, user.getUsername());
@@ -79,6 +84,7 @@ public class Userdao {
         preparedStatement.execute();
         connection.close();
     }
+
 
     static class UserResultSetMapper extends ResultSetMapper<User>{
         @Override
@@ -96,4 +102,17 @@ public class Userdao {
             return user;
         }
     }
+
+    public static boolean isUsernameUnique(String username, Long id) throws SQLException {
+        Connection connection = DataSource.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement("SELECT COUNT(*) FROM dbo.Users WHERE username = ? AND id_user <> ?");
+        preparedStatement.setString(1, username);
+        preparedStatement.setLong(2, id);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        resultSet.next();
+        int count = resultSet.getInt(1);
+        connection.close();
+        return count == 0;
+    }
+
 }

@@ -7,9 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- Boxicons CSS -->
-    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/static/css/sb-admin-2.min.css" rel="stylesheet">
-    <link href="/static/css/app.css" rel="stylesheet">
+
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
     <title>Cruscotto HR - users</title>
     <link rel="stylesheet" href="/static/css/style.css" type="text/css"/>
@@ -129,17 +127,6 @@
 
                 <h1 class="color-employee">Lista Dipendenti <button id="addEmployeeButton" class="btn btn-primary" style="float: right;">+</button></h1>
 
-                <div class="row">
-                    <div class="col-md-6">
-                        <label class="color-employee" for="filter-name">Filtro per Nome:</label>
-                        <input type="text" id="filter-name" class="form-control">
-                    </div>
-                    <div class="col-md-6">
-                        <label class="color-employee" for="filter-surname">Filtro per Cognome:</label>
-                        <input type="text" id="filter-surname" class="form-control">
-                    </div>
-                </div>
-
             <br>
                                             <div class="row">
                                                 <div class="col-md-12">
@@ -178,56 +165,65 @@
                                                     <td>${user_model.idUser}</td>
                                                     <td>${user_model.username}</td>
                                                     <td>${user_model.password}</td>
-                                                    <td>${user_model.rl}</td>
+                                                    <td>
+                                                        <c:choose>
+                                                            <c:when test="${user_model.rl == 1}">
+                                                                DIPENDENTE
+                                                            </c:when>
+                                                            <c:when test="${user_model.rl == 0}">
+                                                                HR
+                                                            </c:when>
+                                                        </c:choose>
+                                                    </td>
                                                     <td>${user_model.name}</td>
                                                     <td>${user_model.surname}</td>
                                                     <td>${user_model.dt}</td>
+
                                                     <td>
                                                         <a id="${user_model.idUser}" class="btn btn-primary delete_button" href=""><i class="fa fa-trash"></i> Delete</a>
                                                         <a class="btn btn-primary" href="/users/${user_model.idUser}"><i class="fa fa-eye"></i> Details</a>
                                                     </td>
                                                 </tr>
                                             </c:forEach>
+                                            ${error}
                                     </tbody>
                               </table>
                            </div>
                            </div>
 
-
-
-                  <div id="addEmployeeForm" style="display: none;">
+              <div id="addEmployeeForm" style="display: none;">
                   <h2>Aggiungi Dipendente</h2>
-                  <form class="form" action="users" method="post">
-                  <div class="form-group">
-                  <label for="username">Username</label>
-                  <input id="username" type="text" name="username" class="form-control" required>
+                      <form class="form" action="users" method="post">
+                          <div class="form-group">
+                          <label for="username">Username</label>
+                          <input id="username" type="text" name="username" class="form-control" required>
+                          </div>
+                          <div class="form-group">
+                          <label for="password">Password</label>
+                          <input id="password" type="password" name="password" class="form-control" required>
+                          </div>
+                         <div class="form-group">
+                           <label for="rl">Role</label>
+                           <input id="rl" type="text" name="rl" class="form-control" oninput="validateRole(this)">
+                         </div>
+                          <div class="form-group">
+                          <label for="name">Name</label>
+                          <input id="name" type="text" name="name" class="form-control" required>
+                          </div>
+                          <div class="form-group">
+                          <label for="surname">Surname</label>
+                          <input id="surname" type="text" name="surname" class="form-control" required>
+                          </div>
+                          <div class="form-group">
+                          <label for="dt">Date</label>
+                          <input id="dt" type="date" name="dt" class="form-control" disabled>
+                          </div>
+                          <br>
+                          <button type="submit" class="btn btn-primary">Submit</button>
+                          <button type="button" id="cancelButton" class="btn btn-primary">Cancel</button>
+                      </form>
                   </div>
-                  <div class="form-group">
-                  <label for="password">Password</label>
-                  <input id="password" type="password" name="password" class="form-control" required>
-                  </div>
-                 <div class="form-group">
-                   <label for="rl">Role</label>
-                   <input id="rl" type="number" name="rl" class="form-control" oninput="validateRole(this)">
-                 </div>
-                  <div class="form-group">
-                  <label for="name">Name</label>
-                  <input id="name" type="text" name="name" class="form-control" required>
-                  </div>
-                  <div class="form-group">
-                  <label for="surname">Surname</label>
-                  <input id="surname" type="text" name="surname" class="form-control" required>
-                  </div>
-                  <div class="form-group">
-                  <label for="dt">Date</label>
-                  <input id="dt" type="date" name="dt" class="form-control" disabled>
-                  </div>
-                  <br>
-                  <button type="submit" class="btn btn-primary">Submit</button>
-                  <button type="button" id="cancelButton" class="btn btn-primary">Cancel</button>
-                  </form>
-                  </div>
-                </div>
+              </div>
         </div>
     </div>
 </section>
@@ -238,46 +234,6 @@
         var currentDate = new Date();
 
         var employeeGridContainer = document.getElementById("employee-grid");
-        var filterNameInput = document.getElementById("filter-name");
-        var filterSurnameInput = document.getElementById("filter-surname");
-
-        function displayEmployees() {
-            employeeGridContainer.innerHTML = "";
-
-            var filteredEmployees = employeeData.filter(function(employee) {
-                var filterName = filterNameInput.value.trim().toLowerCase();
-                var filterSurname = filterSurnameInput.value.trim().toLowerCase();
-
-                var matchName = employee.name.toLowerCase().includes(filterName);
-                var matchSurname = employee.surname.toLowerCase().includes(filterSurname);
-
-                return matchName && matchSurname;
-            });
-
-            filteredEmployees.forEach(function(employee) {
-                var gridItem = document.createElement("div");
-                gridItem.classList.add("employee-grid-item");
-
-                var detailsButton = document.createElement("button");
-                detailsButton.textContent = "Dettagli";
-                detailsButton.classList.add("details-button");
-                detailsButton.addEventListener("click", function() {
-                    openPopup(employee);
-                });
-
-                var surnameElement = document.createElement("p");
-                surnameElement.textContent = "Cognome: " + employee.surname;
-
-                var nameElement = document.createElement("p");
-                nameElement.textContent = "Nome: " + employee.name;
-
-                gridItem.appendChild(surnameElement);
-                gridItem.appendChild(nameElement);
-                gridItem.appendChild(detailsButton);
-
-                employeeGridContainer.appendChild(gridItem);
-            });
-        }
 
             function addEmployee(event) {
         event.preventDefault();
@@ -311,9 +267,6 @@
     document.getElementById("employeeForm").addEventListener("submit", addEmployee);
 
     displayEmployees(employeeData);
-
-        filterNameInput.addEventListener("input", displayEmployees);
-        filterSurnameInput.addEventListener("input", displayEmployees);
 
         displayEmployees();
 </script>
@@ -373,6 +326,16 @@ function closePopup() {
 document.getElementById('cancelButton').addEventListener('click', function() {
 document.getElementById('addEmployeeForm').style.display = 'none';
 document.getElementById("addEmployeeButton").style.display = "block";
+resetFields();
+
+function resetFields() {
+    document.getElementById("name").value = "";
+    document.getElementById("surname").value = "";
+    document.getElementById("username").value = "";
+    document.getElementById("password").value = "";
+    document.getElementById("rl").value = "";
+}
+
 });
 
 </script>
