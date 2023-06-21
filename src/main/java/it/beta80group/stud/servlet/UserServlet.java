@@ -1,7 +1,6 @@
 package it.beta80group.stud.servlet;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import it.beta80group.stud.model.TestModel;
 import it.beta80group.stud.model.User;
 import it.beta80group.stud.services.UserService;
 import org.apache.logging.log4j.LogManager;
@@ -94,7 +93,6 @@ public class UserServlet extends HttpServlet {
 	 */
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getSession().removeAttribute("error");
 		try {
 			Long rl = 1L;
 			LocalDate currentDate = LocalDate.now();
@@ -127,8 +125,13 @@ public class UserServlet extends HttpServlet {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/users/users.jsp");
 			dispatcher.forward(request, response);
 		} catch (Exception e){
-			request.getSession().setAttribute("error", e.getMessage());
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/users/users.jsp");
+			request.setAttribute("errorVar","L'username è già esistente");
+			try {
+				request.setAttribute("users_list", usService.list());
+			} catch (Exception e1){
+
+			}
 			dispatcher.forward(request, response);
 		}
 	}

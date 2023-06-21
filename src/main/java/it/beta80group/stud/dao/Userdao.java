@@ -25,6 +25,7 @@ public class Userdao {
 
     public static void insert(User model) throws SQLException {
         if (!isUsernameUnique(model.getUsername(), (long) -1)) {
+            throw new SQLException();
         }
         Connection connection = DataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(SAVE_QUERY);
@@ -73,6 +74,7 @@ public class Userdao {
 
     public static void update(User user) throws SQLException {
         if (!isUsernameUnique(user.getUsername(), user.getIdUser())) {
+            throw new SQLException();
         }
         Connection connection = DataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_QUERY);

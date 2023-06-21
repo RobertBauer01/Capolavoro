@@ -60,7 +60,7 @@
 
 
                 <a href="https://www.facebook.com">Facebook</a>
-                <a href="https://www.youtube.com">YouTube</a>
+
 
             </div>
         </div>
@@ -185,7 +185,7 @@
                                                     </td>
                                                 </tr>
                                             </c:forEach>
-                                            ${error}
+
                                     </tbody>
                               </table>
                            </div>
@@ -339,12 +339,12 @@ function resetFields() {
 });
 
 </script>
-<!-- SYSTEM JS -->
+<<!-- SYSTEM JS -->
 <script src="/static/js/jquery-3.2.1.min.js"></script>
         <script src="/static/js/popper.min.js" ></script>
         <script src="/static/js/bootstrap.min.js" ></script>
         <script src="/static/js/sb-admin-2.min.js" ></script>
-        <script src="/static/js/app/app_utils.js"></script>
+        <script src="/static/js/app/app_utils.js"></script>>
 
 <script>
             var doDeleteUrl = "/users";
@@ -368,6 +368,9 @@ function resetFields() {
 
             $( document ).ready(function() {
                 $(".delete_button").on("click", onClickDelete);
+                <c:if test="${not empty errorVar}">
+                        window.alert("${errorVar}");
+                </c:if>
                 console.log( "ready!" );
             });
         </script>
