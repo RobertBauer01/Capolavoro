@@ -23,7 +23,7 @@
 <nav class="navbar">
     <div class="logo_item">
         <i class="bx bx-menu" id="sidebarOpen"></i>
-        <button type="button" class="image-button-nav" onclick="goToUsersPage()">
+        <button type="button" class="image-button-nav" onclick="goToHomePage()">
             <img src="/static/img/beta80favicon.png" alt="Immagine Bottone"> </i>Home Page
         </button>
     </div>
@@ -59,11 +59,6 @@
                         <button type="submit" id="saveButton" style="display: none;">Salva</button>
                     </form>
                 </div>
-
-
-                <a href="https://www.facebook.com">Facebook</a>
-                <a href="https://www.youtube.com">YouTube</a>
-
             </div>
         </div>
     </div>
@@ -74,35 +69,35 @@
     <div class="menu_content">
 
         <ul class="menu_items">
-            <div class="menu_title menu_setting"></div>
-            <li class="item">
-            </li>
-            <li class="item">
-                <a href="" class="nav_link">
-              <span class="navlink_icon">
-                <i class="bx bx-medal"></i>
-              </span>
+                <div class="menu_title menu_setting"></div>
+                <li class="item">
+                </li>
+                <li class="item">
+                          <a onclick="goToHomePage()" class="nav_link">
+                              <span class="navlink_icon">
+                                <i class="bx bx-home"></i>
+                              </span>
+                            <span class="navlink">HomePage</span>
+                          </a>
+                        </li>
+                <li class="item">
+                  <a onclick="goToUsersPage()" class="nav_link">
+                      <span class="navlink_icon">
+                        <i class="bx bx-face"></i>
+                      </span>
                     <span class="navlink">Dipendenti</span>
-                </a>
-            </li>
+                  </a>
+                </li>
 
-            <li class="item">
-                <a onclick="goToTaskPage()" class="nav_link">
-              <span class="navlink_icon">
-                <i class="bx bx-layer"></i>
-              </span>
+                <li class="item">
+                  <a onclick="goToTaskPage()" class="nav_link">
+                      <span class="navlink_icon">
+                        <i class="bx bx-layer"></i>
+                      </span>
                     <span class="navlink">Task</span>
-                </a>
-            </li>
-            <li class="item">
-                <a href="" class="nav_link">
-              <span class="navlink_icon">
-                <i class="bx bx-cog"></i>
-              </span>
-                    <span class="navlink">Opzioni</span>
-                </a>
-            </li>
-        </ul>
+                  </a>
+                </li>
+              </ul>
 
         <!-- Sidebar Open / Close -->
         <div class="bottom_content">
@@ -414,6 +409,11 @@ function validateRole(input) {
     input.value = ""; // Reset il valore dell'input se non è 0 o 1
   }
 }
+</script>
+<script>
+function goToHomePage() {
+        window.location.href = '/hpHR';
+    }
 </script>
 </body>
 </html>

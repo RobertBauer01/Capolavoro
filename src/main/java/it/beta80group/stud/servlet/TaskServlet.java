@@ -3,6 +3,7 @@ package it.beta80group.stud.servlet;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import it.beta80group.stud.model.Task;
 import it.beta80group.stud.model.TestModel;
+import it.beta80group.stud.model.User;
 import it.beta80group.stud.services.TaskService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -26,6 +27,7 @@ public class TaskServlet extends HttpServlet {
 	final Logger logger = LogManager.getLogger(TaskServlet.class);
 	private static final long serialVersionUID = 1L;
 	private TaskService tkService;
+
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
@@ -40,11 +42,10 @@ public class TaskServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		logger.info("CALLED /task/ doGet");
 		String pathInfo = request.getPathInfo();
-		if(pathInfo == null || pathInfo.equalsIgnoreCase("/")){
+		if (pathInfo == null || pathInfo.equalsIgnoreCase("/")) {
 			logger.info("CALLED /task/ doGet");
 			list(request, response);
-		}
-		else{
+		} else {
 			Long id = Long.parseLong(pathInfo.split("/")[1]);
 			logger.info("CALLED /task/{} doGet", id);
 
@@ -59,11 +60,10 @@ public class TaskServlet extends HttpServlet {
 		RequestDispatcher dispatcher = null;
 		try {
 			tsk = tkService.getById(id);
-			if(tsk != null){
+			if (tsk != null) {
 				dispatcher = request.getRequestDispatcher("/WEB-INF/tasks/taskDetails.jsp");
 				request.setAttribute("task_model", tsk);
-			}
-			else{
+			} else {
 				response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 				dispatcher = request.getRequestDispatcher("/WEB-INF/not_found.jsp");
 
@@ -91,21 +91,17 @@ public class TaskServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,  IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		logger.info("CALLED /task/ doPost");
-		String title = request.getParameter("title");
+		String title = request.getParameter("title").trim();
 		String description = request.getParameter("description");
 		String imgSrc = request.getParameter("imgSrc");
 		String link = request.getParameter("link");
-		String statusStr = request.getParameter("status");
-		Long status = null;
-		if (statusStr != null && !statusStr.isEmpty()) {
-			status = Long.valueOf(statusStr);
-		}
+		String status = request.getParameter("status");
 		Long orderCol = Long.valueOf(request.getParameter("orderCol"));
 		List<Task> list;
 		try {
-			tkService.save(title, description, imgSrc, link, status, orderCol);
+			tkService.save(title, description, imgSrc, link, Long.valueOf(status), orderCol);
 			list = tkService.list();
 			request.setAttribute("task_list", list);
 		} catch (SQLException e) {
@@ -139,7 +135,4 @@ public class TaskServlet extends HttpServlet {
 			request.getSession().setAttribute("error", "Hai dimenticato/sbagliato un campo");
 		}
 	}
-
-
-
 }

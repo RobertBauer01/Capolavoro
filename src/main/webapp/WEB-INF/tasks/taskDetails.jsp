@@ -22,7 +22,7 @@
    <nav class="navbar">
       <div class="logo_item">
          <i class="bx bx-menu" id="sidebarOpen"></i>
-         <button type="button" class="image-button-nav" onclick="goToUsersPage()">
+         <button type="button" class="image-button-nav" onclick="goToHomePage()">
          <img src="/static/img/beta80favicon.png" alt="Immagine Bottone"> </i>Home Page
          </button>
       </div>
@@ -62,11 +62,19 @@
          <ul class="menu_items">
             <div class="menu_title menu_setting"></div>
             <li class="item">
+                <a onclick="goToHomePage()" class="nav_link">
+                <span class="navlink_icon">
+                <i class="bx bx-home"></i>
+                </span>
+                <span class="navlink">HomePage</span>
+                </a>
+            </li>
+            <li class="item">
             </li>
             <li class="item">
                <a onclick="goToUsersPage()" class="nav_link">
                <span class="navlink_icon">
-               <i class="bx bx-medal"></i>
+               <i class="bx bx-face"></i>
                </span>
                <span class="navlink">Dipendenti</span>
                </a>
@@ -77,14 +85,6 @@
                <i class="bx bx-layer"></i>
                </span>
                <span class="navlink">Task</span>
-               </a>
-            </li>
-            <li class="item">
-               <a href="#" class="nav_link">
-               <span class="navlink_icon">
-               <i class="bx bx-cog"></i>
-               </span>
-               <span class="navlink">Opzioni</span>
                </a>
             </li>
          </ul>
@@ -190,11 +190,21 @@
           var real_url = doPutUrl + "?idTask=" + _btnId;
           spinner_on();
           var data = {
-              title: $("#title").val(),
-              description: $("#description").val(),
+              title: $("#title").val().trim(),
+              description: $("#description").val().trim(),
               link: $("#link").val(),
               status: $("#status").val(),
-              orderCol: $("#orderCol").val()
+              orderCol: $("#orderCol").val().trim()
+          }
+          if(data.title == "") {
+            window.alert("titolo mancante");
+            return;
+          } else if(data.description == "") {
+            window.alert("descrizione mancante");
+            return;
+          } else if(data.orderCol == "") {
+            window.alert("livello di priorità mancante");
+            return;
           }
           doPut(data, real_url,
               function(s){
@@ -253,6 +263,11 @@
       }
    </script>
    <script>
+        function goToHomePage() {
+            window.location.href = '/hpHR';
+        }
+    </script>
+   <script>
       document.getElementById('openPopup').addEventListener('click', function(e) {
         e.preventDefault();
         document.getElementById('popup-overlay').style.display = 'block';
@@ -283,7 +298,7 @@
         document.getElementById('popup').style.display = 'none';
       }
 
-      document.getElementById('cancelButton').addEventListener('click', function() {
+      document.getElementById('cancel_btn').addEventListener('click', function() {
       document.getElementById('addEmployeeForm').style.display = 'none';
       document.getElementById("addEmployeeButton").style.display = "block";
       });

@@ -19,44 +19,49 @@
 </head>
 
 <!-- navbar -->
-<nav class="navbar">
+  <nav class="navbar">
     <div class="logo_item">
-        <i class="bx bx-menu" id="sidebarOpen"></i>
-        <button type="button" class="image-button-nav" onclick="goToTaskPage()">
-            <img src="/static/img/beta80favicon.png" alt="Immagine Bottone"> </i>Home Page
-        </button>
+      <i class="bx bx-menu" id="sidebarOpen"></i>
+      <button type="button" class="image-button-nav" onclick="gotToHomePage()">
+        <img src="/static/img/beta80favicon.png" alt="Immagine Bottone"> </i>Home Page
+      </button>
     </div>
-    <div class="navbar_content">
-        <i class="bi bi-grid"></i>
-        <i class='bx bx-sun' id="darkLight"></i>
-        <div class="dropdown" style="float:right;">
-            <button type="button" class="image-button">
-                            <img src="/static/img/utente.png.png" alt="Immagine Bottone">
-                        </button>
-                        <div class="dropdown-content">
 
-                            <a href="#" id="openPopup">Apri Area Personale</a>
 
-                            <div id="popup-overlay"></div>
+    <div class="navbar_content" >
 
-                            <div id="popup">
-                                <div class="popup-header">
-                                    <h2>Area Personale</h2>
-                                    <button id="closePopup">Chiudi</button>
-                                </div>
-                    <form>
-                        <label for="benvenuto">Testo di benvenuto:</label>
-                        <input type="text" id="benvenuto" name="benvenuto" placeholder="Inserisci il testo di benvenuto" disabled>
-                        <label for="email">Email:</label>
-                        <input type="email" id="email" name="email" placeholder="Inserisci la tua email" disabled>
-                        <button type="button" id="editButton">Modifica</button>
-                        <button type="submit" id="saveButton" style="display: none;">Salva</button>
-                    </form>
-                     </div>
+      <i class="bi bi-grid"></i>
+      <i class='bx bx-sun' id="darkLight"></i>
+      <div class="dropdown" style="float:right;">
+        <button type="button" class="image-button">
+          <img src="/static/img/utente.png.png" alt="Immagine Bottone">
+        </button>
+        <div class="dropdown-content">
+
+          <a href="#" id="openPopup">Apri Area Personale</a>
+
+          <div id="popup-overlay"></div>
+
+          <div id="popup">
+            <div class="popup-header">
+              <h2>Area Personale</h2>
+              <button id="closePopup">Chiudi</button>
             </div>
-           </div>
-       </div>
-</nav>
+            <form>
+              <label for="benvenuto">Testo di benvenuto:</label>
+              <input type="text" id="benvenuto" name="benvenuto" placeholder="Inserisci il testo di benvenuto" disabled>
+
+              <label for="email">Email:</label>
+              <input type="email" id="email" name="email" placeholder="Inserisci la tua email" disabled>
+
+              <button type="button" id="editButton">Modifica</button>
+              <button type="submit" id="saveButton" style="display: none;">Salva</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
 
 <!-- sidebar -->
 <nav class="sidebar">
@@ -66,9 +71,17 @@
             <li class="item">
             </li>
             <li class="item">
+                              <a onclick="goToHomePage()" class="nav_link">
+                                  <span class="navlink_icon">
+                                    <i class="bx bx-home"></i>
+                                  </span>
+                                <span class="navlink">HomePage</span>
+                              </a>
+                            </li>
+            <li class="item">
                 <a onclick="goToUsersPage()" class="nav_link">
                   <span class="navlink_icon">
-                    <i class="bx bx-medal"></i>
+                    <i class="bx bx-face"></i>
                   </span>
                     <span class="navlink">Dipendenti</span>
                 </a>
@@ -81,14 +94,7 @@
                     <span class="navlink">Task</span>
                 </a>
             </li>
-            <li class="item">
-                <a href="" class="nav_link">
-                  <span class="navlink_icon">
-                    <i class="bx bx-cog"></i>
-                  </span>
-                    <span class="navlink">Opzioni</span>
-                </a>
-            </li>
+
         </ul>
         <!-- Sidebar Open / Close -->
         <div class="bottom_content">
@@ -173,7 +179,7 @@
             </div>
             <div id="addEmployeeForm" style="display: none;">
                              <br>
-                                    <form class="form" action="task" method="post">
+                                    <form class="form" action="task" method="post" onsubmit="return validateForm()">
                                                 <div class="form-group"><h2 class="color-employee">Aggiunta Task</h2>
                                                     <label for="title">Title</label>
                                                     <input id="title" type="text" name="title" class="form-control" required>
@@ -188,7 +194,7 @@
                                                 </div>
                                                 <div>
                                                       <label for="link">Link</label>
-                                                      <input id="link" type="text" name="link" class="form-control" required>
+                                                      <input id="link" type="text" name="link" class="form-control">
                                                 </div>
                                                 <div>
                                                       <label for="orderCol">Priority Level</label>
@@ -206,7 +212,7 @@
                                                              <a id"back_btn" class="btn btn-primary" onclick="goToTaskPage()" style="float: right;">Back</a>
                                                 </div>
                                             </section>
-                                         </body>
+
 <!-- SYSTEM JS -->
 <script src="/static/js/jquery-3.2.1.min.js"></script>
 <script src="/static/js/popper.min.js"></script>
@@ -244,7 +250,11 @@
         window.location.href = '/users';
     }
 </script>
-
+<script>
+function goToHomePage() {
+        window.location.href = '/hpHR';
+    }
+</script>
 <script>
     document.getElementById('openPopup').addEventListener('click', function(e) {
         e.preventDefault();
@@ -288,24 +298,29 @@
     }
 
     function closePopup() {
-        document.getElementById("popup").style.display = "none";
-    }
-
-    function createTask() {
-        const title = document.getElementById("title").value;
-        const description = document.getElementById("description").value;
-        const imageLink = document.getElementById("image-link").value;
-        const link = document.getElementById("link").value;
-        const status = document.getElementById("status").value;
-
-        // Esegui le azioni necessarie per creare la nuova task
-        // Puoi utilizzare i valori delle variabili per inviare i dati al server o manipolare l'interfaccia utente
-
-        closePopup(); // Chiudi il popup dopo aver creato la task
+      document.getElementById('popup-overlay').style.display = 'none';
+      document.getElementById("popup").style.display = "none";
     }
      document.getElementById("addEmployeeButton").addEventListener("click", function () {
                 document.getElementById("addEmployeeForm").style.display = "block";
         });
 </script>
+<script>
+  function validateForm() {
+    // Ottieni i valori dei campi di input
+    var title = document.getElementById("title").value.trim();
+    var description = document.getElementById("description").value.trim();
 
+    // Verifica se i campi sono vuoti o stringhe vuote
+    if (title === "" || description === "") {
+      // Mostra il messaggio di errore
+      alert("I campi Title e Description sono obbligatori.");
+      return false; // Impedisce l'invio del modulo
+    }
+
+    // Se la validazione ha successo, il modulo può essere inviato
+    return true;
+  }
+</script>
+</body>
 </html>
