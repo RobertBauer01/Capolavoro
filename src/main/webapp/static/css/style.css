@@ -531,3 +531,6 @@ display: block;
     .carousel .carousel-item img {
       object-fit: cover;
     }
+    .img {
+        size 100px;
+    }
