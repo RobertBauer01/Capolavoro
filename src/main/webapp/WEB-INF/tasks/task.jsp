@@ -318,7 +318,7 @@ function goToHomePage() {
       return false; // Impedisce l'invio del modulo
     }
 
-    // Se la validazione ha successo, il modulo può essere inviato
+    // Se la validazione ha successo, il modulo puÃ² essere inviato
     return true;
   }
 </script>

@@ -203,7 +203,7 @@
             window.alert("descrizione mancante");
             return;
           } else if(data.orderCol == "") {
-            window.alert("livello di priorit‡ mancante");
+            window.alert("livello di priorit√† mancante");
             return;
           }
           doPut(data, real_url,
@@ -312,7 +312,7 @@
    <script>
       function validateRole(input) {
         if (input.value !== "0" && input.value !== "1") {
-          input.value = ""; // Reset il valore dell'input se non Ë 0 o 1
+          input.value = ""; // Reset il valore dell'input se non √® 0 o 1
         }
       }
    </script>
