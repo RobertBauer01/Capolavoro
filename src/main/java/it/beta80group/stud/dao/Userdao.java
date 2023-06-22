@@ -2,10 +2,9 @@ package it.beta80group.stud.dao;
 
 import it.beta80group.stud.model.User;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 /*
 * CREATE TABLE hrportal.dbo.testtable (
@@ -22,7 +21,8 @@ public class Userdao {
     private static final String DELETE_QUERY = "DELETE FROM dbo.Users WHERE id_user = ?";
     private static final String SAVE_QUERY = "INSERT INTO dbo.Users(username, password, rl, name, surname, dt) VALUES(?, ?, ?, ?, ?, ?)";
     private static final String GET_ALL_QUERY = "SELECT * FROM dbo.Users ORDER BY surname, name";
-
+    private static final String TASK_QUERY = "SELECT * FROM Tasks WHERE status = 1";
+    private static final String SAVE_TASK_USER_QUERY = "INSERT INTO dbo.Task_User(id_task, id_user) VALUES(?, ?)";
     public static void insert(User model) throws SQLException {
         if (!isUsernameUnique(model.getUsername(), (long) -1)) {
             throw new SQLException();
@@ -35,7 +35,37 @@ public class Userdao {
         preparedStatement.setString(4, model.getName());
         preparedStatement.setString(5, model.getSurname());
         preparedStatement.setDate(6, model.getDt());
-        preparedStatement.execute();
+
+        int rowsAffected = preparedStatement.executeUpdate();
+        //Ottenere l'ultimo ID generato
+        if (rowsAffected > 0) {
+            try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
+                if (generatedKeys.next()){
+                    long lastInsertedID = generatedKeys.getLong(1);
+                }
+            }
+        }
+        //Salvare in un ResultSet tutti i task attivi
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(TASK_QUERY);
+
+        List<Integer> idList = new ArrayList<>();
+        while (resultSet.next()) {
+            int id = resultSet.getInt("id_Task");
+            idList.add(id);
+        }
+        resultSet.close();
+        statement.close();
+
+        //Salvare gli l'ultimo ID dello user e tutti gli id dei task attivi nella tabella Task_User
+        PreparedStatement savestatement = connection.prepareStatement(SAVE_TASK_USER_QUERY);
+        Iterator<Integer> iterator = idList.iterator();
+
+        preparedStatement.setLong(1, Long.parseLong("lastInsertedID"));
+        while (iterator.hasNext()){
+            int id = iterator.next();
+
+        }
         connection.close();
     }
 
