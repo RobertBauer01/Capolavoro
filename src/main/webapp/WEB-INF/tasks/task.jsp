@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
+<<<<<<< Updated upstream
         <head>
             <meta charset="utf-8">
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -15,6 +16,30 @@
                     rel="stylesheet">
             <link href="/static/css/sb-admin-2.min.css" rel="stylesheet">
             <link href="/static/css/app.css" rel="stylesheet">
+=======
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Boxicons CSS -->
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/static/css/style.css" type="text/css"/>
+    <link rel="icon" href="/static/img/beta80favicon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="./img/beta80favicon.png" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+</head>
+
+<!-- navbar -->
+  <nav class="navbar">
+    <div class="logo_item">
+      <i class="bx bx-menu" id="sidebarOpen"></i>
+      <button type="button" class="image-button-nav" onclick="goToHomePage()">
+        <img src="/static/img/beta80favicon.png" alt="Immagine Bottone"> </i>Home Page
+      </button>
+    </div>
+>>>>>>> Stashed changes
 
 
         </head>
@@ -33,6 +58,7 @@
                     </a>
 
 
+<<<<<<< Updated upstream
                     <!-- Nav Item - Dashboard -->
                     <li class="nav-item">
                         <a class="nav-link" href="/hello">
@@ -45,6 +71,28 @@
 
                 <!-- Content Wrapper -->
                 <div id="content-wrapper" class="d-flex flex-column">
+=======
+          <div id="popup">
+            <div class="popup-header">
+              <h2>Area Personale</h2>
+              <button id="closePopup">Chiudi</button>
+            </div>
+                    <form id="myForm">
+                      <label for="benvenuto">Testo di benvenuto:</label>
+                      <textarea id="benvenuto" name="benvenuto" placeholder="Inserisci il testo di benvenuto" disabled></textarea>
+
+                      <label for="email">Email:</label>
+                      <input type="email" id="email" name="email" placeholder="Inserisci la tua email" disabled>
+
+                      <button type="button" id="editButton">Modifica</button>
+                      <button type="submit" id="saveButton" style="display: none;">Salva</button>
+                    </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+>>>>>>> Stashed changes
 
                     <!-- Main Content -->
                     <div id="content">
@@ -230,6 +278,7 @@
                 status: $("#status").val(),
                 orderCol: $("#orderCol").val()
 
+<<<<<<< Updated upstream
                 }
                 doPost(data, doPostUrl,
                     function(s){
@@ -255,3 +304,96 @@
                     }
                   </script>
 </html>
+=======
+    document.getElementById('closePopup').addEventListener('click', function() {
+        closePopup();
+    });
+
+    document.getElementById('editButton').addEventListener('click', function() {
+        document.getElementById('benvenuto').disabled = false;
+        document.getElementById('email').disabled = false;
+        document.getElementById('editButton').style.display = 'none';
+        document.getElementById('saveButton').style.display = 'inline-block';
+    });
+
+    document.getElementById('saveButton').addEventListener('click', function() {
+        // Effettua qui le operazioni di salvataggio dei dati
+        document.getElementById('benvenuto').disabled = true;
+        document.getElementById('email').disabled = true;
+        document.getElementById('editButton').style.display = 'inline-block';
+        document.getElementById('saveButton').style.display = 'none';
+    });
+
+    function closePopup() {
+        document.getElementById('popup-overlay').style.display = 'none';
+        document.getElementById('popup').style.display = 'none';
+    }
+
+    document.getElementById('cancelButton').addEventListener('click', function() {
+        document.getElementById('addEmployeeForm').style.display = 'none';
+        document.getElementById("addEmployeeButton").style.display = "block";
+    });
+
+</script>
+<script>
+    function openPopup() {
+        document.getElementById("popup").style.display = "block";
+    }
+
+    function closePopup() {
+      document.getElementById('popup-overlay').style.display = 'none';
+      document.getElementById("popup").style.display = "none";
+    }
+     document.getElementById("addEmployeeButton").addEventListener("click", function () {
+                document.getElementById("addEmployeeForm").style.display = "block";
+        });
+</script>
+<script>
+  function validateForm() {
+    // Ottieni i valori dei campi di input
+    var title = document.getElementById("title").value.trim();
+    var description = document.getElementById("description").value.trim();
+
+    // Verifica se i campi sono vuoti o stringhe vuote
+    if (title === "" || description === "") {
+      // Mostra il messaggio di errore
+      alert("I campi Title e Description sono obbligatori.");
+      return false; // Impedisce l'invio del modulo
+    }
+
+    // Se la validazione ha successo, il modulo può essere inviato
+    return true;
+  }
+</script>
+<script>
+  const form = document.getElementById("myForm");
+  const benvenutoField = document.getElementById("benvenuto");
+  const emailField = document.getElementById("email");
+  const editButton = document.getElementById("editButton");
+  const saveButton = document.getElementById("saveButton");
+
+  editButton.addEventListener("click", function() {
+    benvenutoField.removeAttribute("disabled");
+    emailField.removeAttribute("disabled");
+    editButton.style.display = "none";
+    saveButton.style.display = "inline";
+  });
+
+  form.addEventListener("submit", function(event) {
+    event.preventDefault(); // Prevent form submission
+
+    // Here you can perform the necessary actions to save the form data
+    // For this example, we'll just log the values to the console
+    console.log("Testo di benvenuto:", benvenutoField.value);
+    console.log("Email:", emailField.value);
+
+    // Disable the fields and switch the buttons back
+    benvenutoField.setAttribute("disabled", "disabled");
+    emailField.setAttribute("disabled", "disabled");
+    editButton.style.display = "inline";
+    saveButton.style.display = "none";
+  });
+</script>
+</body>
+</html>
+>>>>>>> Stashed changes

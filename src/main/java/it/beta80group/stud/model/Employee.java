@@ -11,6 +11,16 @@ public class Employee {
 
     private Long orderCol;
 
+    private long idTask;
+
+    public long getIdTask() {
+        return idTask;
+    }
+
+    public void setIdTask(long idTask) {
+        this.idTask = idTask;
+    }
+
     public String getTitle() {
         return title;
     }
