@@ -7,9 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- Boxicons CSS -->
-    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/static/css/sb-admin-2.min.css" rel="stylesheet">
-    <link href="/static/css/app.css" rel="stylesheet">
+
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
     <title>Cruscotto HR - users</title>
     <link rel="stylesheet" href="/static/css/style.css" type="text/css"/>
@@ -48,17 +46,22 @@
                         <h2>Area Personale</h2>
                         <button id="closePopup">Chiudi</button>
                     </div>
-                    <form>
-                        <label for="benvenuto">Testo di benvenuto:</label>
-                        <input type="text" id="benvenuto" name="benvenuto" placeholder="Inserisci il testo di benvenuto" disabled>
+                    <form id="myForm">
+                      <label for="benvenuto">Testo di benvenuto:</label>
+                      <textarea id="benvenuto" name="benvenuto" placeholder="Inserisci il testo di benvenuto" disabled></textarea>
 
-                        <label for="email">Email:</label>
-                        <input type="email" id="email" name="email" placeholder="Inserisci la tua email" disabled>
+                      <label for="email">Email:</label>
+                      <input type="email" id="email" name="email" placeholder="Inserisci la tua email" disabled>
 
-                        <button type="button" id="editButton">Modifica</button>
-                        <button type="submit" id="saveButton" style="display: none;">Salva</button>
+                      <button type="button" id="editButton">Modifica</button>
+                      <button type="submit" id="saveButton" style="display: none;">Salva</button>
                     </form>
                 </div>
+
+
+                <a href="https://www.facebook.com">Facebook</a>
+
+
             </div>
         </div>
     </div>
@@ -69,35 +72,34 @@
     <div class="menu_content">
 
         <ul class="menu_items">
-                <div class="menu_title menu_setting"></div>
-                <li class="item">
-                </li>
-                <li class="item">
-                          <a onclick="goToHomePage()" class="nav_link">
-                              <span class="navlink_icon">
-                                <i class="bx bx-home"></i>
-                              </span>
-                            <span class="navlink">HomePage</span>
-                          </a>
-                        </li>
-                <li class="item">
-                  <a onclick="goToUsersPage()" class="nav_link">
-                      <span class="navlink_icon">
-                        <i class="bx bx-face"></i>
-                      </span>
+            <div class="menu_title menu_setting"></div>
+            <li class="item">
+            </li>
+            <li class="item">
+                              <a onclick="goToHomePage()" class="nav_link">
+                                  <span class="navlink_icon">
+                                    <i class="bx bx-home"></i>
+                                  </span>
+                                <span class="navlink">HomePage</span>
+                              </a>
+                            </li>
+            <li class="item">
+                <a onclick="goToUsersPage()" class="nav_link">
+                  <span class="navlink_icon">
+                    <i class="bx bx-face"></i>
+                  </span>
                     <span class="navlink">Dipendenti</span>
-                  </a>
-                </li>
-
-                <li class="item">
-                  <a onclick="goToTaskPage()" class="nav_link">
-                      <span class="navlink_icon">
-                        <i class="bx bx-layer"></i>
-                      </span>
+                </a>
+            </li>
+            <li class="item">
+                <a onclick="goToTaskPage()" class="nav_link">
+                  <span class="navlink_icon">
+                    <i class="bx bx-layer"></i>
+                  </span>
                     <span class="navlink">Task</span>
-                  </a>
-                </li>
-              </ul>
+                </a>
+            </li>
+        </ul>
 
         <!-- Sidebar Open / Close -->
         <div class="bottom_content">
@@ -123,17 +125,6 @@
             <div class="col-md-9">
 
                 <h1 class="color-employee">Lista Dipendenti <button id="addEmployeeButton" class="btn btn-primary" style="float: right;">+</button></h1>
-
-                <div class="row">
-                    <div class="col-md-6">
-                        <label class="color-employee" for="filter-name">Filtro per Nome:</label>
-                        <input type="text" id="filter-name" class="form-control">
-                    </div>
-                    <div class="col-md-6">
-                        <label class="color-employee" for="filter-surname">Filtro per Cognome:</label>
-                        <input type="text" id="filter-surname" class="form-control">
-                    </div>
-                </div>
 
             <br>
                                             <div class="row">
@@ -173,53 +164,65 @@
                                                     <td>${user_model.idUser}</td>
                                                     <td>${user_model.username}</td>
                                                     <td>${user_model.password}</td>
-                                                    <td>${user_model.rl}</td>
+                                                    <td>
+                                                        <c:choose>
+                                                            <c:when test="${user_model.rl == 1}">
+                                                                DIPENDENTE
+                                                            </c:when>
+                                                            <c:when test="${user_model.rl == 0}">
+                                                                HR
+                                                            </c:when>
+                                                        </c:choose>
+                                                    </td>
                                                     <td>${user_model.name}</td>
                                                     <td>${user_model.surname}</td>
                                                     <td>${user_model.dt}</td>
+
                                                     <td>
                                                         <a id="${user_model.idUser}" class="btn btn-primary delete_button" href=""><i class="fa fa-trash"></i> Delete</a>
                                                         <a class="btn btn-primary" href="/users/${user_model.idUser}"><i class="fa fa-eye"></i> Details</a>
                                                     </td>
                                                 </tr>
                                             </c:forEach>
+
                                     </tbody>
                               </table>
                            </div>
-                        </div>
-                  <div id="addEmployeeForm" style="display: none;">
+                           </div>
+
+              <div id="addEmployeeForm" style="display: none;">
                   <h2>Aggiungi Dipendente</h2>
-                  <form class="form" action="users" method="post">
-                  <div class="form-group">
-                  <label for="username">Username</label>
-                  <input id="username" type="text" name="username" class="form-control" required>
+                      <form class="form" action="users" method="post">
+                          <div class="form-group">
+                          <label for="username">Username</label>
+                          <input id="username" type="text" name="username" class="form-control" required>
+                          </div>
+                          <div class="form-group">
+                          <label for="password">Password</label>
+                          <input id="password" type="password" name="password" class="form-control" required>
+                          </div>
+                         <div class="form-group">
+                           <label for="rl">Role</label>
+                           <input id="rl" type="text" name="rl" class="form-control" oninput="validateRole(this)">
+                         </div>
+                          <div class="form-group">
+                          <label for="name">Name</label>
+                          <input id="name" type="text" name="name" class="form-control" required>
+                          </div>
+                          <div class="form-group">
+                          <label for="surname">Surname</label>
+                          <input id="surname" type="text" name="surname" class="form-control" required>
+                          </div>
+                          <div class="form-group">
+                          <label for="dt">Date</label>
+                          <input id="dt" type="date" name="dt" class="form-control" disabled>
+                          </div>
+                          <br>
+                          <button type="submit" class="btn btn-primary">Submit</button>
+                          <button type="button" id="cancelButton" class="btn btn-primary">Cancel</button>
+                      </form>
                   </div>
-                  <div class="form-group">
-                  <label for="password">Password</label>
-                  <input id="password" type="password" name="password" class="form-control" required>
-                  </div>
-                 <div class="form-group">
-                   <label for="rl">Role</label>
-                   <input id="rl" type="number" name="rl" class="form-control" oninput="validateRole(this)">
-                 </div>
-                  <div class="form-group">
-                  <label for="name">Name</label>
-                  <input id="name" type="text" name="name" class="form-control" required>
-                  </div>
-                  <div class="form-group">
-                  <label for="surname">Surname</label>
-                  <input id="surname" type="text" name="surname" class="form-control" required>
-                  </div>
-                  <div class="form-group">
-                  <label for="dt">Date</label>
-                  <input id="dt" type="date" name="dt" class="form-control" disabled>
-                  </div>
-                  <br>
-                  <button type="submit" class="btn btn-primary">Submit</button>
-                  <button type="button" id="cancelButton" class="btn btn-primary">Cancel</button>
-                  </form>
-                  </div>
-                </div>
+              </div>
         </div>
     </div>
 </section>
@@ -230,46 +233,6 @@
         var currentDate = new Date();
 
         var employeeGridContainer = document.getElementById("employee-grid");
-        var filterNameInput = document.getElementById("filter-name");
-        var filterSurnameInput = document.getElementById("filter-surname");
-
-        function displayEmployees() {
-            employeeGridContainer.innerHTML = "";
-
-            var filteredEmployees = employeeData.filter(function(employee) {
-                var filterName = filterNameInput.value.trim().toLowerCase();
-                var filterSurname = filterSurnameInput.value.trim().toLowerCase();
-
-                var matchName = employee.name.toLowerCase().includes(filterName);
-                var matchSurname = employee.surname.toLowerCase().includes(filterSurname);
-
-                return matchName && matchSurname;
-            });
-
-            filteredEmployees.forEach(function(employee) {
-                var gridItem = document.createElement("div");
-                gridItem.classList.add("employee-grid-item");
-
-                var detailsButton = document.createElement("button");
-                detailsButton.textContent = "Dettagli";
-                detailsButton.classList.add("details-button");
-                detailsButton.addEventListener("click", function() {
-                    openPopup(employee);
-                });
-
-                var surnameElement = document.createElement("p");
-                surnameElement.textContent = "Cognome: " + employee.surname;
-
-                var nameElement = document.createElement("p");
-                nameElement.textContent = "Nome: " + employee.name;
-
-                gridItem.appendChild(surnameElement);
-                gridItem.appendChild(nameElement);
-                gridItem.appendChild(detailsButton);
-
-                employeeGridContainer.appendChild(gridItem);
-            });
-        }
 
             function addEmployee(event) {
         event.preventDefault();
@@ -304,9 +267,6 @@
 
     displayEmployees(employeeData);
 
-        filterNameInput.addEventListener("input", displayEmployees);
-        filterSurnameInput.addEventListener("input", displayEmployees);
-
         displayEmployees();
 </script>
 <script>
@@ -319,7 +279,11 @@
             }
         }
 </script>
-
+<script>
+function goToHomePage() {
+        window.location.href = '/hpHR';
+    }
+</script>
 <script>
     function goToUsersPage() {
         window.location.href = '/users';
@@ -365,15 +329,25 @@ function closePopup() {
 document.getElementById('cancelButton').addEventListener('click', function() {
 document.getElementById('addEmployeeForm').style.display = 'none';
 document.getElementById("addEmployeeButton").style.display = "block";
+resetFields();
+
+function resetFields() {
+    document.getElementById("name").value = "";
+    document.getElementById("surname").value = "";
+    document.getElementById("username").value = "";
+    document.getElementById("password").value = "";
+    document.getElementById("rl").value = "";
+}
+
 });
 
 </script>
-<!-- SYSTEM JS -->
+<<!-- SYSTEM JS -->
 <script src="/static/js/jquery-3.2.1.min.js"></script>
         <script src="/static/js/popper.min.js" ></script>
         <script src="/static/js/bootstrap.min.js" ></script>
         <script src="/static/js/sb-admin-2.min.js" ></script>
-        <script src="/static/js/app/app_utils.js"></script>
+        <script src="/static/js/app/app_utils.js"></script>>
 
 <script>
             var doDeleteUrl = "/users";
@@ -397,6 +371,9 @@ document.getElementById("addEmployeeButton").style.display = "block";
 
             $( document ).ready(function() {
                 $(".delete_button").on("click", onClickDelete);
+                <c:if test="${not empty errorVar}">
+                        window.alert("${errorVar}");
+                </c:if>
                 console.log( "ready!" );
             });
         </script>
@@ -411,9 +388,33 @@ function validateRole(input) {
 }
 </script>
 <script>
-function goToHomePage() {
-        window.location.href = '/hpHR';
-    }
+  const form = document.getElementById("myForm");
+  const benvenutoField = document.getElementById("benvenuto");
+  const emailField = document.getElementById("email");
+  const editButton = document.getElementById("editButton");
+  const saveButton = document.getElementById("saveButton");
+
+  editButton.addEventListener("click", function() {
+    benvenutoField.removeAttribute("disabled");
+    emailField.removeAttribute("disabled");
+    editButton.style.display = "none";
+    saveButton.style.display = "inline";
+  });
+
+  form.addEventListener("submit", function(event) {
+    event.preventDefault(); // Prevent form submission
+
+    // Here you can perform the necessary actions to save the form data
+    // For this example, we'll just log the values to the console
+    console.log("Testo di benvenuto:", benvenutoField.value);
+    console.log("Email:", emailField.value);
+
+    // Disable the fields and switch the buttons back
+    benvenutoField.setAttribute("disabled", "disabled");
+    emailField.setAttribute("disabled", "disabled");
+    editButton.style.display = "inline";
+    saveButton.style.display = "none";
+  });
 </script>
 </body>
 </html>
