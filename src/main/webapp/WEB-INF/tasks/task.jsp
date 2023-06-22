@@ -153,7 +153,7 @@
                                         <td>${task.idTask}</td>
                                         <td>${task.title}</td>
                                         <td>${task.description}</td>
-                                        <td>${task.imageSrc}</td>
+                                        <td> <img src="/static/img/x.png"> </td>
                                         <td>${task.link}</td>
                                         <td>
                                             <c:choose>
