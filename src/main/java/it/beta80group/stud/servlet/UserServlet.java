@@ -120,6 +120,7 @@ public class UserServlet extends HttpServlet {
 			list = usService.list();
 			request.setAttribute("users_list", list);
 		} catch (SQLException e) {
+
 			throw new RuntimeException(e);
 		}
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/users/users.jsp");
