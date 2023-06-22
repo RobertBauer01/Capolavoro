@@ -48,15 +48,15 @@
                         <h2>Area Personale</h2>
                         <button id="closePopup">Chiudi</button>
                     </div>
-                    <form>
-                        <label for="benvenuto">Testo di benvenuto:</label>
-                        <input type="text" id="benvenuto" name="benvenuto" placeholder="Inserisci il testo di benvenuto" disabled>
+                    <form id="myForm">
+                      <label for="benvenuto">Testo di benvenuto:</label>
+                      <textarea id="benvenuto" name="benvenuto" placeholder="Inserisci il testo di benvenuto" disabled></textarea>
 
-                        <label for="email">Email:</label>
-                        <input type="email" id="email" name="email" placeholder="Inserisci la tua email" disabled>
+                      <label for="email">Email:</label>
+                      <input type="email" id="email" name="email" placeholder="Inserisci la tua email" disabled>
 
-                        <button type="button" id="editButton">Modifica</button>
-                        <button type="submit" id="saveButton" style="display: none;">Salva</button>
+                      <button type="button" id="editButton">Modifica</button>
+                      <button type="submit" id="saveButton" style="display: none;">Salva</button>
                     </form>
                 </div>
 
@@ -89,6 +89,9 @@
                             <table class="table">
                                                                     <thead>
                                                                         <tr>
+                                                                           <th>
+                                                                                ID
+                                                                            </th>
                                                                             <th>
                                                                                 TITLE
                                                                             </th>
@@ -112,13 +115,14 @@
                                                                     <tbody>
                                                 <c:forEach items="${employee_list}" var="employee_model">
                                                     <tr>
+                                                        <td>${employee_model.idTask}</td>
                                                         <td>${employee_model.title}</td>
                                                         <td>${employee_model.description}</td>
                                                         <td>${employee_model.imageSrc}</td>
                                                         <td>${employee_model.link}</td>
                                                         <td>${employee_model.link}</td>
                                                          <td>
-                                                             <a class="btn btn-primary" href="/employee/${employee_model.title}"><i class="fa fa-eye"></i> Details</a>
+                                                             <a class="btn btn-primary" href="/employee/${employee_model.idTask}"><i class="fa fa-eye"></i> Details</a>
                                                          </td>
 
                                                     </tr>
@@ -182,6 +186,34 @@ function closePopup() {
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>
+<script>
+  const form = document.getElementById("myForm");
+  const benvenutoField = document.getElementById("benvenuto");
+  const emailField = document.getElementById("email");
+  const editButton = document.getElementById("editButton");
+  const saveButton = document.getElementById("saveButton");
 
+  editButton.addEventListener("click", function() {
+    benvenutoField.removeAttribute("disabled");
+    emailField.removeAttribute("disabled");
+    editButton.style.display = "none";
+    saveButton.style.display = "inline";
+  });
+
+  form.addEventListener("submit", function(event) {
+    event.preventDefault(); // Prevent form submission
+
+    // Here you can perform the necessary actions to save the form data
+    // For this example, we'll just log the values to the console
+    console.log("Testo di benvenuto:", benvenutoField.value);
+    console.log("Email:", emailField.value);
+
+    // Disable the fields and switch the buttons back
+    benvenutoField.setAttribute("disabled", "disabled");
+    emailField.setAttribute("disabled", "disabled");
+    editButton.style.display = "inline";
+    saveButton.style.display = "none";
+  });
+</script>
 </body>
 </html>
