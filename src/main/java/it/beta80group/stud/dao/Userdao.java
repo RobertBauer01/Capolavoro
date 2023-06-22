@@ -2,10 +2,9 @@ package it.beta80group.stud.dao;
 
 import it.beta80group.stud.model.User;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 /*
 * CREATE TABLE hrportal.dbo.testtable (
@@ -17,21 +16,56 @@ import java.util.List;
 *
 * */
 public class Userdao {
-    private static final String UPDATE_QUERY = "UPDATE tt SET tt.username = ?, tt.password = ?, tt.name = ?, tt.surname = ? FROM dbo.Users tt WHERE id_user = ?";
+    private static final String UPDATE_QUERY = "UPDATE tt SET tt.username = ?, tt.password = ?, tt.name = ?, tt.surname = ? FROM dbo.Users as tt WHERE id_user = ?";
     private static final String GET_BY_ID_QUERY = "SELECT * FROM dbo.Users WHERE id_user = ?";
     private static final String DELETE_QUERY = "DELETE FROM dbo.Users WHERE id_user = ?";
-    private static final String SAVE_QUERY = "INSERT INTO dbo.Users(username, password, rl, name, surname, dt) VALUES(?, ?, 1, ?, ?, ?)";
-    private static final String GET_ALL_QUERY = "SELECT * FROM dbo.Users";
-
-    public static void save(User model) throws SQLException {
+    private static final String SAVE_QUERY = "INSERT INTO dbo.Users(username, password, rl, name, surname, dt) VALUES(?, ?, ?, ?, ?, ?)";
+    private static final String GET_ALL_QUERY = "SELECT * FROM dbo.Users ORDER BY surname, name";
+    private static final String TASK_QUERY = "SELECT * FROM Tasks WHERE status = 1";
+    private static final String SAVE_TASK_USER_QUERY = "INSERT INTO dbo.Task_User(id_task, id_user) VALUES(?, ?)";
+    public static void insert(User model) throws SQLException {
+        if (!isUsernameUnique(model.getUsername(), (long) -1)) {
+            throw new SQLException();
+        }
         Connection connection = DataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(SAVE_QUERY);
         preparedStatement.setString(1, model.getUsername());
         preparedStatement.setString(2, model.getPassword());
-        preparedStatement.setString(3, model.getName());
-        preparedStatement.setString(4, model.getSurname());
-        preparedStatement.setDate(5, model.getDt());
-        preparedStatement.execute();
+        preparedStatement.setLong(3, model.getRl());
+        preparedStatement.setString(4, model.getName());
+        preparedStatement.setString(5, model.getSurname());
+        preparedStatement.setDate(6, model.getDt());
+
+        int rowsAffected = preparedStatement.executeUpdate();
+        //Ottenere l'ultimo ID generato
+        if (rowsAffected > 0) {
+            try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
+                if (generatedKeys.next()){
+                    long lastInsertedID = generatedKeys.getLong(1);
+                }
+            }
+        }
+        //Salvare in un ResultSet tutti i task attivi
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(TASK_QUERY);
+
+        List<Integer> idList = new ArrayList<>();
+        while (resultSet.next()) {
+            int id = resultSet.getInt("id_Task");
+            idList.add(id);
+        }
+        resultSet.close();
+        statement.close();
+
+        //Salvare gli l'ultimo ID dello user e tutti gli id dei task attivi nella tabella Task_User
+        PreparedStatement savestatement = connection.prepareStatement(SAVE_TASK_USER_QUERY);
+        Iterator<Integer> iterator = idList.iterator();
+
+        preparedStatement.setLong(1, Long.parseLong("lastInsertedID"));
+        while (iterator.hasNext()){
+            int id = iterator.next();
+
+        }
         connection.close();
     }
 
@@ -69,6 +103,9 @@ public class Userdao {
     }
 
     public static void update(User user) throws SQLException {
+        if (!isUsernameUnique(user.getUsername(), user.getIdUser())) {
+            throw new SQLException();
+        }
         Connection connection = DataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_QUERY);
         preparedStatement.setString(1, user.getUsername());
@@ -79,6 +116,7 @@ public class Userdao {
         preparedStatement.execute();
         connection.close();
     }
+
 
     static class UserResultSetMapper extends ResultSetMapper<User>{
         @Override
@@ -96,4 +134,17 @@ public class Userdao {
             return user;
         }
     }
+
+    public static boolean isUsernameUnique(String username, Long id) throws SQLException {
+        Connection connection = DataSource.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement("SELECT COUNT(*) FROM dbo.Users WHERE username = ? AND id_user <> ?");
+        preparedStatement.setString(1, username);
+        preparedStatement.setLong(2, id);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        resultSet.next();
+        int count = resultSet.getInt(1);
+        connection.close();
+        return count == 0;
+    }
+
 }

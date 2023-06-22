@@ -36,7 +36,7 @@ public class UserService {
         model.setName(name);
         model.setSurname(surname);
         model.setDt(dt);
-        Userdao.save(model);
+        Userdao.insert(model);
     }
 
     public List<User> list() throws SQLException {
