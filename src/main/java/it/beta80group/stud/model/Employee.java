@@ -1,5 +1,7 @@
 package it.beta80group.stud.model;
 
+import java.util.Date;
+
 public class Employee {
     private String title;
 
@@ -11,13 +13,23 @@ public class Employee {
 
     private Long orderCol;
 
-    private long idTask;
+    private Long idTask;
 
-    public long getIdTask() {
+    private java.sql.Date statusTask;
+
+    public java.sql.Date getStatusTask() {
+        return statusTask;
+    }
+
+    public void setStatusTask(java.sql.Date statusTask) {
+        this.statusTask = statusTask;
+    }
+
+    public Long getIdTask() {
         return idTask;
     }
 
-    public void setIdTask(long idTask) {
+    public void setIdTask(Long idTask) {
         this.idTask = idTask;
     }
 

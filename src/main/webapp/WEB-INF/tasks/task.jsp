@@ -8,9 +8,9 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- Boxicons CSS -->
-
     <link href="/static/css/bootstrap.min.css" rel="stylesheet">
     <link href="/static/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="/static/css/app.css" rel="stylesheet">
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="/static/css/style.css" type="text/css"/>
     <link rel="icon" href="/static/img/beta80favicon.png" type="image/x-icon">

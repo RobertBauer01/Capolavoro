@@ -122,12 +122,14 @@ public class UserServlet extends HttpServlet {
 				list = usService.list();
 				request.setAttribute("users_list", list);
 			} catch (SQLException e) {
+				e.printStackTrace();
 				throw new RuntimeException(e);
 			}
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/users/users.jsp");
 			dispatcher.forward(request, response);
 		} catch (Exception e){
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/users/users.jsp");
+			e.printStackTrace();
 			request.setAttribute("errorVar","L'username è già esistente");
 			try {
 				request.setAttribute("users_list", usService.list());

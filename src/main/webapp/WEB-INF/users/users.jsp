@@ -370,7 +370,7 @@ function resetFields() {
 <script>
             var doDeleteUrl = "/users";
             function onClickDelete(evt){
-                if (window.confirm("sei sicuro di voler cancellare?")) {
+                if (window.confirm("Sei sicuro di voler cancellare?")) {
                     var _btnId = $(this).attr('id');
                     var real_url = doDeleteUrl + "?idUser=" + _btnId;
                     spinner_on();

@@ -2,6 +2,7 @@ package it.beta80group.stud.servlet;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import it.beta80group.stud.model.Employee;
+import it.beta80group.stud.model.Task;
 import it.beta80group.stud.model.User;
 import it.beta80group.stud.services.EmployeeService;
 import org.apache.logging.log4j.LogManager;
@@ -52,6 +53,7 @@ public class EmployeeServlet extends HttpServlet {
             Long id = Long.parseLong(pathInfo.split("/")[1]);
             logger.info("CALLED /employee/{} doGet", id);
 
+            details(id, request, response);
         }
     }
 
@@ -61,7 +63,7 @@ public class EmployeeServlet extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/employee/employee.jsp");
         List<Employee> list;
         try {
-            list = empService.list(155L);
+            list = empService.list(192L);
             request.setAttribute("employee_list", list);
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -92,7 +94,28 @@ public class EmployeeServlet extends HttpServlet {
         }
     }
 
+
     /**
      * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
      */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        logger.info("CALLED /employee/ doPost");
+        String title = request.getParameter("title").trim();
+        String description = request.getParameter("description");
+        String imgSrc = request.getParameter("imgSrc");
+        String link = request.getParameter("link");
+        String status = request.getParameter("status");
+        Long orderCol = Long.valueOf(request.getParameter("orderCol"));
+        List<Employee> list;
+        try {
+            empService.save(title, description, imgSrc, link, java.sql.Date.valueOf(status), orderCol);
+            list = empService.list(192L);
+            request.setAttribute("employee_list", list);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/employee/employee.jsp");
+        dispatcher.forward(request, response);
+    }
 }
