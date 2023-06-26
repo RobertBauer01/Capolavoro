@@ -45,7 +45,7 @@
         <div class="dropdown-content">
 
           <a href="#" id="openPopup">Apri Area Personale</a>
-
+          <a href="/logout">LOGOUT</a>
           <div id="popup-overlay"></div>
 
           <div id="popup">
