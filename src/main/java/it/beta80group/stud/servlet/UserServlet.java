@@ -96,14 +96,6 @@ public class UserServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-<<<<<<< HEAD
-			usService.save(username, password, rl, name, surname, sqlDate);
-			list = usService.list();
-			request.setAttribute("users_list", list);
-		} catch (SQLException e) {
-
-			throw new RuntimeException(e);
-=======
 			Long rl = 1L;
 			LocalDate currentDate = LocalDate.now();
 			Date sqlDate = Date.valueOf(currentDate);
@@ -143,7 +135,6 @@ public class UserServlet extends HttpServlet {
 
 			}
 			dispatcher.forward(request, response);
->>>>>>> f001f658ea79c124d0b818372ba5561817a8caf8
 		}
 	}
 
