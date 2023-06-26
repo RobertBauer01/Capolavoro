@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.sql.Date;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
@@ -81,6 +82,7 @@ public class UserServlet extends HttpServlet {
 		List<User> list;
 		try {
 			list = usService.list();
+
 			request.setAttribute("users_list", list);
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
