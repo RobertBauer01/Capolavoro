@@ -8,16 +8,16 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- Boxicons CSS -->
+
     <link href="/static/css/bootstrap.min.css" rel="stylesheet">
     <link href="/static/css/sb-admin-2.min.css" rel="stylesheet">
-    <link href="/static/css/app.css" rel="stylesheet">
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="/static/css/style.css" type="text/css"/>
     <link rel="icon" href="/static/img/beta80favicon.png" type="image/x-icon">
     <link rel="shortcut icon" href="./img/beta80favicon.png" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 </head>
-
+<body>
 <!-- navbar -->
   <nav class="navbar">
     <div class="logo_item">
@@ -66,6 +66,7 @@
 <!-- sidebar -->
 <nav class="sidebar">
     <div class="menu_content">
+
         <ul class="menu_items">
             <div class="menu_title menu_setting"></div>
             <li class="item">
@@ -94,7 +95,6 @@
                     <span class="navlink">Task</span>
                 </a>
             </li>
-
         </ul>
         <!-- Sidebar Open / Close -->
         <div class="bottom_content">
@@ -120,6 +120,7 @@
             <div class="col-md-9">
                 <h1 class="color-employee">Lista task <button id="addEmployeeButton" class="btn btn-primary" style="float: right;">+</button></h1>
                 <div class="row">
+                <br>
                     <div class="col-md-12">
                         <table class="table">
                             <thead>
@@ -178,9 +179,10 @@
                 </div>
             </div>
             <div id="addEmployeeForm" style="display: none;">
-                             <br>
+
                                     <form class="form" action="task" method="post" onsubmit="return validateForm()">
                                                 <div class="form-group"><h2 class="color-employee">Aggiunta Task</h2>
+                                                <br>
                                                     <label for="title">Title</label>
                                                     <input id="title" type="text" name="title" class="form-control" required>
                                                 </div>
@@ -207,9 +209,10 @@
                                                       <option value="0">Disattivo</option>
                                                 </select>
                                                 </div>
+                                                <br>
                                                 <div>
-                                                             <button id="post_btn" type="submit" class="btn btn-primary">Submit</button>
-                                                             <a id"back_btn" class="btn btn-primary" onclick="goToTaskPage()" style="float: right;">Back</a>
+                                                     <button id="post_btn" type="submit" class="btn btn-primary">Submit</button>
+                                                     <button type="button" class="btn btn-primary" onclick="goToTaskPage()" style="float: right;">Back</button>
                                                 </div>
                                             </section>
 
@@ -304,6 +307,7 @@ function goToHomePage() {
      document.getElementById("addEmployeeButton").addEventListener("click", function () {
                 document.getElementById("addEmployeeForm").style.display = "block";
         });
+
 </script>
 <script>
   function validateForm() {

@@ -20,7 +20,7 @@ import org.apache.logging.log4j.Logger;
 /**
  * Servlet implementation class HelloWorldServlet
  */
-@WebServlet("/hello/*")
+@WebServlet("/")
 public class HelloWorldServlet extends HttpServlet {
 
 	final Logger logger = LogManager.getLogger(HelloWorldServlet.class);

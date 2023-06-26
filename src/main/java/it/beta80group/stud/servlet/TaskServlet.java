@@ -22,6 +22,8 @@ import java.util.List;
  * Servlet implementation class HelloWorldServlet
  */
 @WebServlet("/task/*")
+
+// Servlet che gestisce le richieste relative ai task
 public class TaskServlet extends HttpServlet {
 
 	final Logger logger = LogManager.getLogger(TaskServlet.class);
@@ -40,6 +42,7 @@ public class TaskServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// Gestione delle richieste GET, ti direziona verso la pagina richiesta
 		logger.info("CALLED /task/ doGet");
 		String pathInfo = request.getPathInfo();
 		if (pathInfo == null || pathInfo.equalsIgnoreCase("/")) {
@@ -55,6 +58,7 @@ public class TaskServlet extends HttpServlet {
 	}
 
 	private void details(Long id, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// Recupero dei dettagli di un task specifico
 		request.getSession().removeAttribute("error");
 		Task tsk = null;
 		RequestDispatcher dispatcher = null;
@@ -72,10 +76,12 @@ public class TaskServlet extends HttpServlet {
 
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
+
 		}
 	}
 
 	protected void list(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// Recupero dell'elenco completo dei task
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/tasks/task.jsp");
 		List<Task> tasks;
 		try {

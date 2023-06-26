@@ -15,14 +15,17 @@ import java.util.List;
 );
 *
 * */
+
+
 public class Userdao {
     private static final String UPDATE_QUERY = "UPDATE tt SET tt.username = ?, tt.password = ?, tt.name = ?, tt.surname = ? FROM dbo.Users as tt WHERE id_user = ?";
     private static final String GET_BY_ID_QUERY = "SELECT * FROM dbo.Users WHERE id_user = ?";
     private static final String DELETE_QUERY = "DELETE FROM dbo.Users WHERE id_user = ?";
     private static final String SAVE_QUERY = "INSERT INTO dbo.Users(username, password, rl, name, surname, dt) VALUES(?, ?, ?, ?, ?, ?)";
-    private static final String GET_ALL_QUERY = "SELECT * FROM dbo.Users ORDER BY surname, name";
-    private static final String TASK_QUERY = "SELECT * FROM Tasks WHERE status = 1";
+    private static final String GET_ALL_QUERY = "SELECT us.*, (SELECT COUNT(*) from dbo.Task_User tu WHERE tu.id_user = us.id_user) as tot_task, (SELECT COUNT(*) from dbo.Task_User tu WHERE tu.id_user = us.id_user and tu.data_completion is not null) as tot_task_done FROM dbo.Users us ORDER BY us.surname, us.name";
     private static final String SAVE_TASK_USER_QUERY = "INSERT INTO dbo.Task_User(id_task, id_user) VALUES(?, ?)";
+    private static final String LAST_USER_ID_QUERY = "SELECT MAX(id_user) FROM Users";
+    private static final String ACTIVE_TASKS_QUERY = "SELECT id_Task FROM Tasks WHERE status = 1";
     public static void insert(User model) throws SQLException {
         if (!isUsernameUnique(model.getUsername(), (long) -1)) {
             throw new SQLException();
@@ -35,36 +38,24 @@ public class Userdao {
         preparedStatement.setString(4, model.getName());
         preparedStatement.setString(5, model.getSurname());
         preparedStatement.setDate(6, model.getDt());
+        preparedStatement.executeUpdate();
 
-        int rowsAffected = preparedStatement.executeUpdate();
-        //Ottenere l'ultimo ID generato
-        if (rowsAffected > 0) {
-            try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
-                if (generatedKeys.next()){
-                    long lastInsertedID = generatedKeys.getLong(1);
-                }
+        PreparedStatement saveStatement = connection.prepareStatement(SAVE_TASK_USER_QUERY);
+        try (Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(LAST_USER_ID_QUERY)) {
+            if (resultSet.next()) {
+                long lastID = resultSet.getLong(1);
+                saveStatement.setLong(2, lastID);
             }
         }
-        //Salvare in un ResultSet tutti i task attivi
-        Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery(TASK_QUERY);
+        try (Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(ACTIVE_TASKS_QUERY)) {
+            while (resultSet.next()) {
+                long taskId = resultSet.getLong("id_Task");
+                saveStatement.setLong(1, taskId);
 
-        List<Integer> idList = new ArrayList<>();
-        while (resultSet.next()) {
-            int id = resultSet.getInt("id_Task");
-            idList.add(id);
-        }
-        resultSet.close();
-        statement.close();
-
-        //Salvare gli l'ultimo ID dello user e tutti gli id dei task attivi nella tabella Task_User
-        PreparedStatement savestatement = connection.prepareStatement(SAVE_TASK_USER_QUERY);
-        Iterator<Integer> iterator = idList.iterator();
-
-        preparedStatement.setLong(1, Long.parseLong("lastInsertedID"));
-        while (iterator.hasNext()){
-            int id = iterator.next();
-
+                saveStatement.executeUpdate();
+            }
         }
         connection.close();
     }
@@ -73,7 +64,7 @@ public class Userdao {
         Connection connection = DataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_QUERY);
         ResultSet resultSet = preparedStatement.executeQuery();
-        UserResultSetMapper mapper = new UserResultSetMapper();
+        UserTaskResultSetMapper mapper = new UserTaskResultSetMapper();
         List<User> testModels = mapper.mapResult(resultSet);
         connection.close();
         return testModels;
@@ -92,7 +83,7 @@ public class Userdao {
         PreparedStatement preparedStatement = connection.prepareStatement(GET_BY_ID_QUERY);
         preparedStatement.setLong(1, id);
         ResultSet resultSet = preparedStatement.executeQuery();
-        Userdao.UserResultSetMapper mapper = new Userdao.UserResultSetMapper();
+        Userdao.UserResultMapper mapper = new Userdao.UserResultMapper();
         List<User> userModels = mapper.mapResult(resultSet);
         User result = null;
         if(!userModels.isEmpty()){
@@ -118,7 +109,7 @@ public class Userdao {
     }
 
 
-    static class UserResultSetMapper extends ResultSetMapper<User>{
+    static class UserTaskResultSetMapper extends ResultSetMapper<User>{
         @Override
         protected User mapResultRow(ResultSet set) throws SQLException {
             User user = new User();
@@ -130,7 +121,24 @@ public class Userdao {
             user.setName(set.getString(5));
             user.setSurname(set.getString(6));
             user.setDt(set.getDate(7));
+            user.setTotTask(set.getLong(8));
+            user.setTotTaskDone(set.getLong(9));
+            return user;
+        }
+    }
 
+    static class UserResultMapper extends ResultSetMapper<User>{
+        @Override
+        protected User mapResultRow(ResultSet set) throws SQLException {
+            User user = new User();
+
+            user.setIdUser(set.getLong(1));
+            user.setUsername(set.getString(2));
+            user.setPassword(set.getString(3));
+            user.setRl(set.getLong(4));
+            user.setName(set.getString(5));
+            user.setSurname(set.getString(6));
+            user.setDt(set.getDate(7));
             return user;
         }
     }

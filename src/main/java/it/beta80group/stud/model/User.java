@@ -11,6 +11,8 @@ public class User {
     private String name;
     private String surname;
     private Date dt;
+    private Long totTask;
+    private Long totTaskDone;
 
     public void setIdUser(Long idUser) {
         this.idUser = idUser;
@@ -67,5 +69,21 @@ public class User {
 
     public Date getDt() {
         return  dt;
+    }
+
+    public void setTotTask(Long totTask) {
+        this.totTask = totTask;
+    }
+
+    public void setTotTaskDone(Long totTaskDone) {
+        this.totTaskDone = totTaskDone;
+    }
+
+    public Long getTotTask() {
+        return totTask;
+    }
+
+    public Long getTotTaskDone() {
+        return totTaskDone;
     }
 }
