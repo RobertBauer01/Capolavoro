@@ -2,13 +2,10 @@ package it.beta80group.stud.services;
 
 import it.beta80group.stud.dao.DataSource;
 import it.beta80group.stud.dao.Employeedao;
-import it.beta80group.stud.dao.Userdao;
 import it.beta80group.stud.model.Employee;
-import it.beta80group.stud.model.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -26,7 +23,17 @@ public class EmployeeService {
         }
         return INSTANCE;
     }
-
+    public void save(String title, String description, String imgSrc, String link, java.sql.Date status, Long orderCol) throws SQLException {
+        logger.info("CALLED save({},{},{},{},{},{},{})", title, description, imgSrc, link, status, orderCol);
+        Employee model = new Employee();
+        model.setTitle(title);
+        model.setDescription(description);
+        model.setImageSrc(imgSrc);
+        model.setLink(link);
+        model.setStatusTask(status);
+        model.setOrderCol(orderCol);
+        Employeedao.save(model);
+    }
 
     public List<Employee> list(Long id_user) throws SQLException {
         logger.info("CALLED list()");

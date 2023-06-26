@@ -10,7 +10,7 @@
     <!-- Boxicons CSS -->
     <link href="/static/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
-    <title>Employee</title>
+    <title>Cruscotto dipendenti - employee</title>
     <link rel="stylesheet" href="/static/css/style.css" type="text/css"/>
     <link rel="icon" href="/static/img/beta80favicon.png" type="image/x-icon">
     <link rel="shortcut icon" href="./img/beta80favicon.png" type="image/x-icon">
@@ -78,9 +78,13 @@
     </div
 
 
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3 sidebar-col">
+                <!-- Sidebar content -->
+            </div>
 
-
-     <!-- Sidebar content -->
                 <div class="col-md-9" >
                     <h1 class="color-employee" >Lista Task</h1>
                 <br>
@@ -89,20 +93,8 @@
                             <table class="table">
                                                                     <thead>
                                                                         <tr>
-                                                                           <th>
-                                                                                ID
-                                                                            </th>
                                                                             <th>
                                                                                 TITLE
-                                                                            </th>
-                                                                            <th>
-                                                                                DESCRIPTION
-                                                                            </th>
-                                                                            <th>
-                                                                                IMAGE
-                                                                            </th>
-                                                                            <th>
-                                                                                LINK
                                                                             </th>
                                                                             <th>
                                                                                 STATUS
@@ -115,11 +107,11 @@
                                                                     <tbody>
                                                 <c:forEach items="${employee_list}" var="employee_model">
                                                     <tr>
-                                                        <td>${employee_model.idTask}</td>
+                                                        <td class="invisible">${employee_model.idTask}</td>
                                                         <td>${employee_model.title}</td>
-                                                        <td>${employee_model.description}</td>
-                                                        <td>${employee_model.imageSrc}</td>
-                                                        <td>${employee_model.link}</td>
+                                                        <td class="invisible">${employee_model.description}</td>
+                                                        <td class="invisible">${employee_model.imageSrc}</td>
+                                                        <td class="invisible">${employee_model.link}</td>
                                                         <td>${employee_model.link}</td>
                                                          <td>
                                                              <a class="btn btn-primary" href="/employee/${employee_model.idTask}"><i class="fa fa-eye"></i> Details</a>
@@ -133,6 +125,9 @@
                                </div>
                                </div>
                 </div>
+                        </div>
+                    </div>
+                </section>
 </div>
 
 <!-- JavaScript -->

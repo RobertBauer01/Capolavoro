@@ -8,6 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- Boxicons CSS -->
+    <title>Cruscotto HR - home page</title>
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
     <title>HOME PAGE HR</title>
     <link rel="stylesheet" href="/static/css/style.css" type="text/css"/>
