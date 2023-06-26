@@ -141,7 +141,7 @@
       <a id="edit_btn" class="btn btn-primary" href="#"><i class="fa fa-edit"></i> Edit</a>
       <a id="put_btn" class="btn btn-primary hidden" href="#">Submit</a>
       <a id="cancel_btn" class="btn btn-primary hidden" href="#">Cancel</a>
-      <a id"back_btn" class="btn btn-primary" onclick="goToTaskPage()" style="float: right;">Back</a>
+      <button type="button" class="btn btn-primary" onclick="goToTaskPage()" style="float: right;">Back</button>
    </form>
    <div class="col-md-3"></div>
    <!-- Spazio a destra -->

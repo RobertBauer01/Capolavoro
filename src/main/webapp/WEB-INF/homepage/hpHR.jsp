@@ -120,43 +120,9 @@
       <h1 class="color-employee text-center">Benvenuti nel nostro cruscotto HR</h1>
 
       <div class="d-flex justify-content-center">
-        <div id="myCarousel" class="carousel slide" data-ride="carousel">
-          <!-- Indicatori -->
-          <ol class="carousel-indicators">
-            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-            <li data-target="#myCarousel" data-slide-to="1"></li>
-            <li data-target="#myCarousel" data-slide-to="2"></li>
-             <li data-target="#myCarousel" data-slide-to="3"></li>
-          </ol>
-
-          <!-- Immagini del carosello -->
-          <div class="carousel-inner">
-            <div class="carousel-item active">
-              <img src="/static/img/img6.png" alt="Immagine 1" class="d-block w-100">
-            </div>
-            <div class="carousel-item">
-              <img src="/static/img/img2.png" alt="Immagine 2" class="d-block w-100">
-            </div>
-            <div class="carousel-item">
-              <img src="/static/img/img4.png" alt="Immagine 3" class="d-block w-100">
-            </div>
-            <div class="carousel-item">
-              <img src="/static/img/img5.png" alt="Immagine 4" class="d-block w-100">
-            </div>
-          </div>
-
-          <!-- Controlli del carosello -->
-          <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-          </a>
-          <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-          </a>
-        </div>
-      </div>
+        <img src="/static/img/img6.png" alt="Immagine 1">
     </div>
+  </div>
 <script src="/static/js/app/script/script.js"></script>
 <script>
         function toggleDropdown() {

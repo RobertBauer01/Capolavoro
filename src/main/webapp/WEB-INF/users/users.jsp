@@ -7,6 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- Boxicons CSS -->
+
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
     <title>Cruscotto HR - users</title>
     <link rel="stylesheet" href="/static/css/style.css" type="text/css"/>
@@ -122,9 +123,7 @@
                 <!-- Sidebar content -->
             </div>
             <div class="col-md-9">
-
                 <h1 class="color-employee">Lista Dipendenti <button id="addEmployeeButton" class="btn btn-primary" style="float: right;">+</button></h1>
-
             <br>
                                             <div class="row">
                                                 <div class="col-md-12">
@@ -137,9 +136,7 @@
                                                                         <th>
                                                                             USERNAME
                                                                         </th>
-                                                                        <th>
-                                                                            PASSWORD
-                                                                        </th>
+
                                                                         <th>
                                                                             ROLE
                                                                         </th>
@@ -153,6 +150,9 @@
                                                                             DATE
                                                                         </th>
                                                                         <th>
+                                                                            STATUS
+                                                                        </th>
+                                                                        <th>
                                                                         ACTIONS
                                                                         </th>
                                                                     </tr>
@@ -162,7 +162,6 @@
                                                 <tr>
                                                     <td>${user_model.idUser}</td>
                                                     <td>${user_model.username}</td>
-                                                    <td>${user_model.password}</td>
                                                     <td>
                                                         <c:choose>
                                                             <c:when test="${user_model.rl == 1}">
@@ -176,6 +175,19 @@
                                                     <td>${user_model.name}</td>
                                                     <td>${user_model.surname}</td>
                                                     <td>${user_model.dt}</td>
+                                                    <td>
+                                                        <c:choose>
+                                                            <c:when test ="${user_model.totTaskDone == 0}">
+                                                                <span style="color: red;">New</span>
+                                                            </c:when>
+                                                            <c:when test="${user_model.totTaskDone != user_model.totTask }">
+                                                                <span style="color: yellow;">On going</span>
+                                                            </c:when>
+                                                            <c:when test="${user_model.totTask == user_model.totTaskDone}">
+                                                                <span style="color: green;">Terminated</span>
+                                                            </c:when>
+                                                        </c:choose>
+                                                    </td>
 
                                                     <td>
                                                         <a id="${user_model.idUser}" class="btn btn-primary delete_button" href=""><i class="fa fa-trash"></i> Delete</a>
@@ -304,6 +316,13 @@ document.getElementById('openPopup').addEventListener('click', function(e) {
 document.getElementById('closePopup').addEventListener('click', function() {
   closePopup();
 });
+// Funzione per aprire il popup
+    function openPopup() {
+        document.getElementById("popup").style.display = "block";
+    }
+    function openPopup_delete() {
+            document.getElementById("popup_delete").style.display = "block";
+        }
 
 document.getElementById('editButton').addEventListener('click', function() {
   document.getElementById('benvenuto').disabled = false;
@@ -351,22 +370,23 @@ function resetFields() {
 <script>
             var doDeleteUrl = "/users";
             function onClickDelete(evt){
-            if (window.confirm("Sei sicuro di voler cancellare?")){
-                var _btnId = $(this).attr('id');
-                var real_url = doDeleteUrl + "?idUser=" + _btnId;
-                spinner_on();
-                doDelete(real_url,
-                    function(s){
-                        console.log(s);
-                        console.log("done");
-                        window.location.href = '/users';
-                    },
-                    function(err){
-                        console.log(err);
-                        console.log("fail");
-                        window.location.href = '/users';
-                    });
+                if (window.confirm("Sei sicuro di voler cancellare?")) {
+                    var _btnId = $(this).attr('id');
+                    var real_url = doDeleteUrl + "?idUser=" + _btnId;
+                    spinner_on();
+                    doDelete(real_url,
+                        function(s){
+                            console.log(s);
+                            console.log("done");
+                            window.location.href = '/users';
+                        },
+                        function(err){
+                            console.log(err);
+                            console.log("fail");
+                            window.location.href = '/users';
+                        });
                 }
+
             }
 
             $( document ).ready(function() {

@@ -485,3 +485,12 @@ display: block;
           display: block;
           z-index: 10000;
         }
+  .back_btn{
+        color: white;
+  }
+.carousel-image {
+  width: 600px;
+  height: 2000px;
+}
+
+.
