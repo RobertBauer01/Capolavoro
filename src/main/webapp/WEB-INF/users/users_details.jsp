@@ -23,7 +23,7 @@
 <nav class="navbar">
     <div class="logo_item">
         <i class="bx bx-menu" id="sidebarOpen"></i>
-        <button type="button" class="image-button-nav" onclick="goToUsersPage()">
+        <button type="button" class="image-button-nav" onclick="goToHomePage()">
             <img src="/static/img/beta80favicon.png" alt="Immagine Bottone"> </i>Home Page
         </button>
     </div>
@@ -48,15 +48,15 @@
                         <h2>Area Personale</h2>
                         <button id="closePopup">Chiudi</button>
                     </div>
-                    <form>
-                        <label for="benvenuto">Testo di benvenuto:</label>
-                        <input type="text" id="benvenuto" name="benvenuto" placeholder="Inserisci il testo di benvenuto" disabled>
+                    <form id="myForm">
+                      <label for="benvenuto">Testo di benvenuto:</label>
+                      <textarea id="benvenuto" name="benvenuto" placeholder="Inserisci il testo di benvenuto" disabled></textarea>
 
-                        <label for="email">Email:</label>
-                        <input type="email" id="email" name="email" placeholder="Inserisci la tua email" disabled>
+                      <label for="email">Email:</label>
+                      <input type="email" id="email" name="email" placeholder="Inserisci la tua email" disabled>
 
-                        <button type="button" id="editButton">Modifica</button>
-                        <button type="submit" id="saveButton" style="display: none;">Salva</button>
+                      <button type="button" id="editButton">Modifica</button>
+                      <button type="submit" id="saveButton" style="display: none;">Salva</button>
                     </form>
                 </div>
 
@@ -78,28 +78,27 @@
             <li class="item">
             </li>
             <li class="item">
+                              <a onclick="goToHomePage()" class="nav_link">
+                                  <span class="navlink_icon">
+                                    <i class="bx bx-home"></i>
+                                  </span>
+                                <span class="navlink">HomePage</span>
+                              </a>
+                            </li>
+            <li class="item">
                 <a onclick="goToUsersPage()" class="nav_link">
-              <span class="navlink_icon">
-                <i class="bx bx-medal"></i>
-              </span>
+                  <span class="navlink_icon">
+                    <i class="bx bx-face"></i>
+                  </span>
                     <span class="navlink">Dipendenti</span>
                 </a>
             </li>
-
             <li class="item">
                 <a onclick="goToTaskPage()" class="nav_link">
-              <span class="navlink_icon">
-                <i class="bx bx-layer"></i>
-              </span>
+                  <span class="navlink_icon">
+                    <i class="bx bx-layer"></i>
+                  </span>
                     <span class="navlink">Task</span>
-                </a>
-            </li>
-            <li class="item">
-                <a href="#" class="nav_link">
-              <span class="navlink_icon">
-                <i class="bx bx-cog"></i>
-              </span>
-                    <span class="navlink">Opzioni</span>
                 </a>
             </li>
         </ul>
@@ -180,7 +179,11 @@
             }
         }
 </script>
-
+<script>
+function goToHomePage() {
+        window.location.href = '/hpHR';
+    }
+</script>
 <script>
     function goToUsersPage() {
         window.location.href = '/users';
@@ -325,6 +328,35 @@ function validateRole(input) {
        var valoreSelezionato = document.getElementById("rl").value;
        console.log("Valore selezionato: " + valoreSelezionato);
    }
+</script>
+<script>
+  const form = document.getElementById("myForm");
+  const benvenutoField = document.getElementById("benvenuto");
+  const emailField = document.getElementById("email");
+  const editButton = document.getElementById("editButton");
+  const saveButton = document.getElementById("saveButton");
+
+  editButton.addEventListener("click", function() {
+    benvenutoField.removeAttribute("disabled");
+    emailField.removeAttribute("disabled");
+    editButton.style.display = "none";
+    saveButton.style.display = "inline";
+  });
+
+  form.addEventListener("submit", function(event) {
+    event.preventDefault(); // Prevent form submission
+
+    // Here you can perform the necessary actions to save the form data
+    // For this example, we'll just log the values to the console
+    console.log("Testo di benvenuto:", benvenutoField.value);
+    console.log("Email:", emailField.value);
+
+    // Disable the fields and switch the buttons back
+    benvenutoField.setAttribute("disabled", "disabled");
+    emailField.setAttribute("disabled", "disabled");
+    editButton.style.display = "inline";
+    saveButton.style.display = "none";
+  });
 </script>
 </body>
 </html>
