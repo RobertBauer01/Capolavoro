@@ -15,9 +15,12 @@ import java.util.List;
 
 public class UserService {
     private DataSource dataSource;
+
+    private LoginService loginService;
     private static UserService INSTANCE = null;
     final Logger logger = LogManager.getLogger(UserService.class);
     protected UserService(){
+        loginService = LoginService.getInstance();
         dataSource = DataSource.getInstance();
     }
 
@@ -32,7 +35,7 @@ public class UserService {
         logger.info("CALLED save({},{},{},{},{},{})", username, password, rl, name, surname, dt);
         User model = new User();
         model.setUsername(username);
-        model.setPassword(password);
+        model.setPassword(loginService.cryptPassword(password));
         model.setRl(rl);
         model.setName(name);
         model.setSurname(surname);
@@ -58,4 +61,5 @@ public class UserService {
     public void update(User user) throws SQLException {
         Userdao.update(user);
     }
+
 }

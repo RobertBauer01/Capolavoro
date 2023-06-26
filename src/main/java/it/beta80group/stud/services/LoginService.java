@@ -4,6 +4,8 @@ import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import it.beta80group.stud.dao.DataSource;
+import it.beta80group.stud.dao.Userdao;
+import it.beta80group.stud.model.User;
 import it.beta80group.stud.model.UserInfo;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -40,10 +42,19 @@ public class LoginService {
 
 
     public UserInfo doLogin(String username, String password) {
-        UserInfo ui = new UserInfo();
-        ui.setUserType(1);
-        ui.setUsername(username);
-        return ui;
+        UserInfo ui = null;
+        try {
+            User user = Userdao.attemptLogin(username, password);
+            if(user != null){
+                ui = new UserInfo();
+                ui.setUserType(user.getRl());
+                ui.setUsername(username);
+            }
+            return ui;
+        }catch (Exception e){
+            logger.error("Unable to fetche results");
+            throw new RuntimeException(e);
+        }
     }
 
     public String createToken(UserInfo ui) {
@@ -76,7 +87,8 @@ public class LoginService {
         return true;
     }
 
-    private String cryptPassword(String password){
+    public String cryptPassword(String password){
         return password;
     }
+
 }

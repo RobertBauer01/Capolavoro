@@ -26,6 +26,9 @@ public class Userdao {
     private static final String SAVE_TASK_USER_QUERY = "INSERT INTO dbo.Task_User(id_task, id_user) VALUES(?, ?)";
     private static final String LAST_USER_ID_QUERY = "SELECT MAX(id_user) FROM Users";
     private static final String ACTIVE_TASKS_QUERY = "SELECT id_Task FROM Tasks WHERE status = 1";
+
+    private static final String ATTEMPT_LOGIN = "SELECT TOP(1) * FROM dbo.Users WHERE username = ? AND password = ?";
+
     public static void insert(User model) throws SQLException {
         if (!isUsernameUnique(model.getUsername(), (long) -1)) {
             throw new SQLException("Username già esistente");
@@ -93,6 +96,21 @@ public class Userdao {
         return result;
     }
 
+    public static User attemptLogin(String username, String password) throws SQLException {
+        Connection connection = DataSource.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(ATTEMPT_LOGIN);
+        preparedStatement.setString(1, username);
+        preparedStatement.setString(2, password);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        Userdao.UserResultMapper mapper = new Userdao.UserResultMapper();
+        List<User> userModels = mapper.mapResult(resultSet);
+        User result = null;
+        if(!userModels.isEmpty()){
+            result = userModels.get(0);
+        }
+        connection.close();
+        return result;
+    }
     public static void update(User user) throws SQLException {
         if (!isUsernameUnique(user.getUsername(), user.getIdUser())) {
             throw new SQLException("Username già esistente");

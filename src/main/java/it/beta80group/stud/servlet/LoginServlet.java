@@ -44,7 +44,7 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,  IOException {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        UserInfo ui = loginService.doLogin(username, password);
+        UserInfo ui = loginService.doLogin(username, loginService.cryptPassword(password));
         if(ui != null){
             String token = loginService.createToken(ui);
             logger.info("login token {}", token);
@@ -52,6 +52,14 @@ public class LoginServlet extends HttpServlet {
             c.setPath("/");
             c.setMaxAge(MAX_AGE);
             response.addCookie(c);
+
+            if(ui.getUserType() == 1){
+                response.sendRedirect("/employee");
+            }
+            else{
+                response.sendRedirect("/hpHR");
+            }
+            return;
         }
         logger.info("CALLED /login doPost {} {}", username, password);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/login/login.jsp");

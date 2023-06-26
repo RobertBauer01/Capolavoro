@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class UserInfo {
     private String username;
-    private Integer userType;
+    private Long userType;
 
     public UserInfo() {
     }
@@ -18,11 +18,11 @@ public class UserInfo {
         this.username = username;
     }
 
-    public Integer getUserType() {
+    public Long getUserType() {
         return userType;
     }
 
-    public void setUserType(Integer userType) {
+    public void setUserType(Long userType) {
         this.userType = userType;
     }
 

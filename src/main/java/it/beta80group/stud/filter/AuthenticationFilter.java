@@ -45,13 +45,12 @@ public class AuthenticationFilter implements Filter {
 
         HttpSession session = req.getSession(false);
 
-        if(!chekifCookieIsPresentAndValid(req) && !uri.equals("/login") && !uri.startsWith("/static")){
+        if(chekifCookieIsPresentAndValid(req) || uri.equals("/login") || uri.startsWith("/static")){
+            logger.info("Passed request");
+            chain.doFilter(request, response);
+        }else{
             logger.info("Unauthorized access request");
             res.sendRedirect("/login");
-        }else{
-            logger.info("Passed request");
-
-            chain.doFilter(request, response);
         }
     }
 
