@@ -70,15 +70,15 @@
       <a id="back_btn" class="btn btn-primary" onclick="goToEmployeePage()" style="float: right;">Back</a>
    </form>
 
-   <form class="form" action="/employee" method="post">
-                <button data-task-id="${employee_model.idTask}" data-user-id="${employee_model.idUser}" type="submit" class="btn btn-primary complete-button" style="float: left; margin-right: 10px;">Complete</button>
+    <form class="form" action="/employee" method="post">
+         <button data-task-id="${employee_model.idTask}" data-user-id="${employee_model.idUser}" type="submit" class="btn btn-primary complete-button" style="float: left; margin-right: 10px;">Complete</button>
 
-                    <div class="form-group" style="visibility:hidden">
-                    <span id="idTask">${employee_model.idTask}</span>
-                </div>
-                <input type="text" value="${employee_model.idTask}" name="idTask" style="visibility:hidden" />
-                <input type="text" value="${employee_model.idUser}" name="idUser" style="visibility:hidden" />
-   </form>
+         <div class="form-group" style="visibility:hidden">
+            <span id="idTask">${employee_model.idTask}</span>
+         </div>
+         <input type="text" value="${employee_model.idTask}" name="idTask" style="visibility:hidden" />
+         <input type="text" value="${employee_model.idUser}" name="idUser" style="visibility:hidden" />
+      </form>
 
    <div class="col-md-3"></div>
    <!-- Spazio a destra -->
@@ -96,28 +96,36 @@
    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
 
 <script>
-  $(document).ready(function() {
-    $('.complete-button').click(function() {
-      var taskId = $(this).data('task-id');
-      var userId = $(this).data('user-id');
+         $(document).ready(function() {
+            $('.complete-button').click(function(e) {
+               e.preventDefault(); // Previeni il comportamento predefinito del submit
 
-      $(this).hide();
+               var taskId = $(this).data('task-id');
+               var userId = $(this).data('user-id');
 
-      // Memorizza lo stato del pulsante nel localStorage
-      localStorage.setItem('completeButton_' + taskId + '_' + userId, 'true');
-    });
+               // Mostra il popup di conferma
+               if (confirm('Sei sicuro di voler completare questa attività?')) {
+                  $(this).hide();
 
-    $('.complete-button').each(function() {
-      var taskId = $(this).data('task-id');
-      var userId = $(this).data('user-id');
-      var isButtonPressed = localStorage.getItem('completeButton_' + taskId + '_' + userId);
+                  // Memorizza lo stato del pulsante nel localStorage
+                  localStorage.setItem('completeButton_' + taskId + '_' + userId, 'true');
 
-      if (isButtonPressed) {
-        $(this).hide();
-      }
-    });
-  });
-</script>
+                  // Effettua la submit del modulo
+                  $(this).closest('form').submit();
+               }
+            });
+
+            $('.complete-button').each(function() {
+               var taskId = $(this).data('task-id');
+               var userId = $(this).data('user-id');
+               var isButtonPressed = localStorage.getItem('completeButton_' + taskId + '_' + userId);
+
+               if (isButtonPressed) {
+                  $(this).hide();
+               }
+            });
+         });
+      </script>
 
 
    <script>

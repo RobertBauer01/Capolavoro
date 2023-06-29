@@ -36,16 +36,16 @@
                <div id="popup-overlay"></div>
                <div id="popup">
                   <div class="popup-header">
-                     <h2>Area Personale</h2>
-                     <button id="closePopup">Chiudi</button>
+                     <h2>My area</h2>
+                     <button id="closePopup">Close</button>
                   </div>
                   <form>
-                     <label for="benvenuto">Testo di benvenuto:</label>
-                     <input type="text" id="benvenuto" name="benvenuto" placeholder="Inserisci il testo di benvenuto" disabled>
+                     <label for="benvenuto">Welcome text:</label>
+                     <input type="text" id="benvenuto" name="benvenuto" placeholder="Insert welcome text" disabled>
                      <label for="email">Email:</label>
-                     <input type="email" id="email" name="email" placeholder="Inserisci la tua email" disabled>
-                     <button type="button" id="editButton">Modifica</button>
-                     <button type="submit" id="saveButton" style="display: none;">Salva</button>
+                     <input type="email" id="email" name="email" placeholder="insert your email" disabled>
+                     <button type="button" id="editButton">Edit</button>
+                     <button type="submit" id="saveButton" style="display: none;">Save</button>
                   </form>
                </div>
             </div>
