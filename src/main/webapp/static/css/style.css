@@ -493,4 +493,7 @@ display: block;
   height: 2000px;
 }
 
-.
+    .center-label {
+        text-align: center;
+    }
+

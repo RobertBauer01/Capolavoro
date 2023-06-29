@@ -212,10 +212,6 @@
                           <label for="password">Password</label>
                           <input id="password" type="password" name="password" class="form-control" required>
                           </div>
-                         <div class="form-group">
-                           <label for="rl">Role</label>
-                           <input id="rl" type="text" name="rl" class="form-control" oninput="validateRole(this)">
-                         </div>
                           <div class="form-group">
                           <label for="name">Name</label>
                           <input id="name" type="text" name="name" class="form-control" required>
@@ -224,10 +220,16 @@
                           <label for="surname">Surname</label>
                           <input id="surname" type="text" name="surname" class="form-control" required>
                           </div>
-                          <div class="form-group">
-                          <label for="dt">Date</label>
-                          <input id="dt" type="date" name="dt" class="form-control" disabled>
-                          </div>
+
+                           <div class="form-group">
+                                                       <label for="rl">Role</label>
+                                                       <br>
+                                                      <select id="rl" name="rl" onchange="gestisciSelezione()">
+                                                          <option value="1">DIPENDENTE</option>
+                                                          <option value="0">HR</option>
+                                                      </select>
+                                                   </div>
+
                           <br>
                           <button type="submit" class="btn btn-primary">Submit</button>
                           <button type="button" id="cancelButton" class="btn btn-primary">Cancel</button>
@@ -279,6 +281,12 @@
     displayEmployees(employeeData);
 
         displayEmployees();
+</script>
+<script>
+   function gestisciSelezione() {
+       var valoreSelezionato = document.getElementById("rl").value;
+       console.log("Valore selezionato: " + valoreSelezionato);
+   }
 </script>
 <script>
         function toggleDropdown() {

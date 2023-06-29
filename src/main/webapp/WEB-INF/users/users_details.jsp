@@ -136,13 +136,7 @@
                     <label for="password">Password</label>
                     <input id="password" type="text" name="password" class="form-control" value="${user_model.password}" disabled required></input>
                 </div>
-                <div class="form-group">
-                    <label for="rl">Role</label>
-                    <select id="rl" onchange="gestisciSelezione()" disabled>
-                          <option value="1">DIPENDENTE</option>
-                          <option value="0">HR</option>
-                    </select>
-                </div>
+
                 <div class="form-group">
                     <label for="name">Name</label>
                     <input id="name" type="text" name="name" class="form-control" value="${user_model.name}" disabled required="required" pattern="[A-Z]">
@@ -155,6 +149,14 @@
                     <label for="dt">Date</label>
                     <input id="dt" type="date" name="dt" class="form-control" value="${user_model.dt}" disabled>
                 </div>
+                 <div>
+                                     <label for="rl">Role</label>
+                                    <br>
+                                    <select id="rl" disabled>
+                                      <option value="1" ${user_model.rl == 1 ? '' : 'selected'}>DIPENDENTE</option>
+                                      <option value="0" ${user_model.rl == 0 ? 'selected' : ''}>HR</option>
+                                    </select>
+                                </div>
                 <br>
                 <a id="edit_btn" class="btn btn-primary" href="#"><i class="fa fa-edit"></i> Edit</a>
                 <a id="cancel_btn" class="btn btn-primary hidden" href="#">Cancel</a>
@@ -207,19 +209,19 @@ document.getElementById('closePopup').addEventListener('click', function() {
   closePopup();
 });
 
-document.getElementById('edit_btn').addEventListener('click', function() {
+document.getElementById('editButton').addEventListener('click', function() {
   document.getElementById('benvenuto').disabled = false;
   document.getElementById('email').disabled = false;
-  document.getElementById('edit_btn').style.display = 'none';
-  document.getElementById('put_btn').style.display = 'inline-block';
+  document.getElementById('editButton').style.display = 'none';
+  document.getElementById('saveButton').style.display = 'inline-block';
 });
 
-document.getElementById('put_btn').addEventListener('click', function() {
+document.getElementById('saveButton').addEventListener('click', function() {
   // Effettua qui le operazioni di salvataggio dei dati
   document.getElementById('benvenuto').disabled = true;
   document.getElementById('email').disabled = true;
-  document.getElementById('edit_btn').style.display = 'inline-block';
-  document.getElementById('put_btn').style.display = 'inline-block';
+  document.getElementById('editButton').style.display = 'inline-block';
+  document.getElementById('saveButton').style.display = 'none';
 });
 
 function closePopup() {
@@ -230,6 +232,7 @@ function closePopup() {
 document.getElementById('cancel_btn').addEventListener('click', function() {
 document.getElementById('addEmployeeForm').style.display = 'none';
 document.getElementById("addEmployeeButton").style.display = "block";
+
 });
 
 </script>
@@ -323,12 +326,9 @@ function validateRole(input) {
   }
 }
 </script>
-<script>
-   function gestisciSelezione() {
-       var valoreSelezionato = document.getElementById("rl").value;
-       console.log("Valore selezionato: " + valoreSelezionato);
-   }
-</script>
+
+
+
 <script>
   const form = document.getElementById("myForm");
   const benvenutoField = document.getElementById("benvenuto");

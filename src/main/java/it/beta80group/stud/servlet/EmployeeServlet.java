@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.rmi.RemoteException;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -62,12 +63,23 @@ public class EmployeeServlet extends HttpServlet {
     protected void list(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/employee/employee.jsp");
         List<Employee> list;
+        Employee employee = null;
         try {
-            list = empService.list(192L);
+
+            list = empService.list(190L);
             request.setAttribute("employee_list", list);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+        try {
+            employee=empService.user(190L);
+            request.setAttribute("empmodel", employee);
+
+        } catch (SQLException ee) {
+            throw new RuntimeException(ee);
+        }
+
         dispatcher.forward(request, response);
     }
 
@@ -101,16 +113,15 @@ public class EmployeeServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         logger.info("CALLED /employee/ doPost");
-        String title = request.getParameter("title").trim();
-        String description = request.getParameter("description");
-        String imgSrc = request.getParameter("imgSrc");
-        String link = request.getParameter("link");
-        String status = request.getParameter("status");
-        Long orderCol = Long.valueOf(request.getParameter("orderCol"));
+        String idTask = request.getParameter("idTask");
+        String idUser = request.getParameter("idUser");
+        logger.info("stringa idTask: " + idTask);
+        logger.info("stringa idUser: " + idUser);
         List<Employee> list;
         try {
-            empService.save(title, description, imgSrc, link, java.sql.Date.valueOf(status), orderCol);
-            list = empService.list(192L);
+
+            empService.update(idTask,idUser);
+            list = empService.list(190L);
             request.setAttribute("employee_list", list);
         } catch (SQLException e) {
             throw new RuntimeException(e);

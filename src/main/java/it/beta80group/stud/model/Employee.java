@@ -1,6 +1,6 @@
 package it.beta80group.stud.model;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Employee {
     private String title;
@@ -15,13 +15,64 @@ public class Employee {
 
     private Long idTask;
 
-    private java.sql.Date statusTask;
+    private Long idUser;
 
-    public java.sql.Date getStatusTask() {
+    private String statusTask;
+
+    private String username;
+
+    private String name;
+
+    private String surname;
+
+    private java.sql.Date data;
+
+    public Date getData() {
+        return data;
+    }
+
+
+    public void setData(Date data) {
+        this.data = data;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public String getStatusTask() {
         return statusTask;
     }
 
-    public void setStatusTask(java.sql.Date statusTask) {
+    public Long getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(Long idUser) {
+        this.idUser = idUser;
+    }
+
+    public void setStatusTask(String statusTask) {
         this.statusTask = statusTask;
     }
 

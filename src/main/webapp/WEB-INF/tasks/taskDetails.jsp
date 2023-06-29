@@ -10,10 +10,12 @@
       <!-- Boxicons CSS -->
       <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
       <title>Cruscotto HR - task-details</title>
+      <link href="/static/css/bootstrap.min.css" rel="stylesheet">
       <link rel="stylesheet" href="/static/css/style.css" type="text/css"/>
       <link rel="icon" href="/static/img/beta80favicon.png" type="image/x-icon">
       <link rel="shortcut icon" href="./img/beta80favicon.png" type="image/x-icon">
-      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+      <link href="/static/css/app.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
    </head>
    <!-- navbar -->
    <nav class="navbar">

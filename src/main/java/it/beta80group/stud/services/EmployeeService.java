@@ -23,15 +23,11 @@ public class EmployeeService {
         }
         return INSTANCE;
     }
-    public void save(String title, String description, String imgSrc, String link, java.sql.Date status, Long orderCol) throws SQLException {
-        logger.info("CALLED save({},{},{},{},{},{},{})", title, description, imgSrc, link, status, orderCol);
+    public void save(String idTask, String idUser) throws SQLException {
+        logger.info("CALLED save({},{})", idTask, idUser);
         Employee model = new Employee();
-        model.setTitle(title);
-        model.setDescription(description);
-        model.setImageSrc(imgSrc);
-        model.setLink(link);
-        model.setStatusTask(status);
-        model.setOrderCol(orderCol);
+        model.setIdTask(Long.valueOf(idTask));
+        model.setIdUser(Long.valueOf(idUser));
         Employeedao.save(model);
     }
 
@@ -43,12 +39,21 @@ public class EmployeeService {
 
 
 
-    public void update(Employee employee) throws SQLException {
+    public void update(String idTask, String idUser) throws SQLException {
+        Employee employee = new Employee();
+        employee.setIdTask(Long.valueOf(idTask));
+        employee.setIdUser(Long.valueOf(idUser));
         Employeedao.update(employee);
     }
 
     public Employee getById(Long id) throws SQLException {
-        Employee byId = Employeedao.getById(id);
+        Employee byId = Employeedao.getById(id,190L);
         return byId;
     }
+
+    public Employee user(Long id) throws SQLException {
+        Employee byId = Employeedao.user(id);
+        return byId;
+    }
+
 }

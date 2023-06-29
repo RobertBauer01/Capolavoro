@@ -32,14 +32,12 @@
     <div class="navbar_content" >
 
         <i class="bi bi-grid"></i>
-        <i class='bx bx-sun' id="darkLight"></i>
         <div class="dropdown" style="float:right;">
             <button type="button" class="image-button">
                 <img src="/static/img/utente.png.png" alt="Immagine Bottone">
             </button>
             <div class="dropdown-content">
 
-                <a href="#" id="openPopup">Apri Area Personale</a>
 
                 <div id="popup-overlay"></div>
 
@@ -61,7 +59,7 @@
                 </div>
 
 
-                <a href="https://www.facebook.com">Facebook</a>
+                <a href="/logout">Logout</a>
 
             </div>
         </div>
@@ -71,10 +69,7 @@
 
 
     <div class="welcome-text">
-        <h3>Benvenuto Dipendente</h3>
-            <div style="text-align: center; white-space: pre-line;">
-                Benvenuto
-            </div>
+        <h3>Welcome ${empmodel.name} ${empmodel.surname} </h3>
     </div
 
 
@@ -86,7 +81,7 @@
             </div>
 
                 <div class="col-md-9" >
-                    <h1 class="color-employee" >Lista Task</h1>
+                    <h1 class="color-employee" >Task List</h1>
                 <br>
                                                 <div class="row">
                                                     <div class="col-md-12">
@@ -97,7 +92,7 @@
                                                                                 TITLE
                                                                             </th>
                                                                             <th>
-                                                                                STATUS
+                                                                                COMPLETION DATE
                                                                             </th>
                                                                             <th>
                                                                                 ACTIONS
@@ -107,12 +102,11 @@
                                                                     <tbody>
                                                 <c:forEach items="${employee_list}" var="employee_model">
                                                     <tr>
-                                                        <td class="invisible">${employee_model.idTask}</td>
                                                         <td>${employee_model.title}</td>
-                                                        <td class="invisible">${employee_model.description}</td>
-                                                        <td class="invisible">${employee_model.imageSrc}</td>
-                                                        <td class="invisible">${employee_model.link}</td>
-                                                        <td>${employee_model.link}</td>
+
+                                                        <td>${employee_model.data}</td>
+
+
                                                          <td>
                                                              <a class="btn btn-primary" href="/employee/${employee_model.idTask}"><i class="fa fa-eye"></i> Details</a>
                                                          </td>
@@ -142,6 +136,9 @@
             }
         }
 </script>
+
+
+
 
 <script>
     function goToTaskPage() {

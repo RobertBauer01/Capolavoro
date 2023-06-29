@@ -19,19 +19,18 @@
    <nav class="navbar">
       <div class="logo_item">
          <i class="bx bx-menu" id="sidebarOpen"></i>
-         <button type="button" class="image-button-nav" onclick="goToHomePage()">
+         <button type="button" class="image-button-nav" onclick="goToEmployeePage()">
          <img src="/static/img/beta80favicon.png" alt="Immagine Bottone"> </i>Home Page
          </button>
       </div>
       <div class="navbar_content" >
          <i class="bi bi-grid"></i>
-         <i class='bx bx-sun' id="darkLight"></i>
+
          <div class="dropdown" style="float:right;">
             <button type="button" class="image-button">
             <img src="/static/img/utente.png.png" alt="Immagine Bottone">
             </button>
             <div class="dropdown-content">
-               <a href="#" id="openPopup">Apri Area Personale</a>
                <div id="popup-overlay"></div>
                <div id="popup">
                   <div class="popup-header">
@@ -47,8 +46,7 @@
                      <button type="submit" id="saveButton" style="display: none;">Salva</button>
                   </form>
                </div>
-               <a href="https://www.facebook.com">Facebook</a>
-               <a href="https://www.youtube.com">YouTube</a>
+                <a href="/logout">Logout</a>
             </div>
          </div>
       </div>
@@ -63,48 +61,46 @@
    <!-- Spazio a sinistra -->
    <div class="col-md-6">
    <!-- Contenitore del modulo -->
-   <h1 class="color-employee">Edit task</h1>
-   <form class="form" action="task" method="post">
+   <h1 class="color-employee center-label">Details task</h1>
+   <br>
+   <form class="form" method="post">
       ${error}
       <div class="form-group">
-         <label for="title">Title</label>
-         <input id="title" type="text" name="title" class="form-control" value="${employee_model.title}" disabled>
+         <label for="title"><b><big>${employee_model.title}</big></b></label>
       </div>
-      <div class="form-group">
-         <label for="description">Description</label>
-         <input id="description" type="text" name="description" class="form-control" value="${employee_model.description}" disabled>
-      </div>
-      <div class=form"form-group">
-         <label for="link">Link</label>
-         <input id="link" type="text" name="link" class="form-control" value="${employee_model.link}" disabled>
-      </div>
-      <div class ="form-group">
-         <label for="imageSrc">Image</label>
-         <input id="imageSrc" type="text" name="imageSrc" class="form-control" value="${employee_model.imageSrc}" disabled>
-      </div>
-     <div class="form-group">
-          <label for="status">Stato</label>
-          <div>
-             <select id="status" name="status" onchange="gestisciSelezione()" disabled>
-                <option value="0">Da fare</option>
-                <option value="1">Completato</option>
-             </select>
-          </div>
-       </div>
       <br>
-      <button type="submit" class="btn btn-primary" onclick="updateStatusToCompleted()" style="float: right; margin-right: 10px;">Completato</button>
-      <a id"back_btn" class="btn btn-primary" onclick="goToEmployeePage()" style="float: right;">Back</a>
+      <div class="form-group">
+         <label for="status">Completion Date: ${employee_model.data}</label>
+      </div>
+      <br>
+      <div class="form-group">
+         <label for="description" >${employee_model.description}</label>
+      </div>
+      <br>
+      <div class=form"form-group">
+         <a href="${employee_model.link}" for="link">${employee_model.link}</label>
+      </div>
+      <br>
 
+      <a id="back_btn" class="btn btn-primary" onclick="goToEmployeePage()" style="float: right;">Back</a>
    </form>
+
+   <form class="form" action="/employee" method="post">
+                <button data-task-id="${employee_model.idTask}" data-user-id="190" type="submit" class="btn btn-primary complete-button" style="float: left; margin-right: 10px;">Completato</button>
+
+                    <div class="form-group" style="visibility:hidden">
+                    <span id="idTask">${employee_model.idTask}</span>
+                </div>
+                <input type="text" value="${employee_model.idTask}" name="idTask" style="visibility:hidden" />
+                <input type="text" value="190" name="idUser" style="visibility:hidden" />
+   </form>
+
    <div class="col-md-3"></div>
    <!-- Spazio a destra -->
    </body>
+
    <!-- SYSTEM JS -->
-   <script>
-      function updateStatusToCompleted() {
-         document.getElementById("status").value = "1"; // Imposta il valore dello stato a "Completato"
-      }
-   </script>
+
    <script src="/static/js/jquery-3.2.1.min.js"></script>
    <script src="/static/js/popper.min.js" ></script>
    <script src="/static/js/bootstrap.min.js" ></script>
@@ -112,6 +108,43 @@
    <script src="/static/js/app/app_utils.js"></script>
    <!-- Page JS -->
    <script src="/static/js/app/script/script.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+
+ <script>
+  $(document).ready(function() {
+    // Aggiungi un gestore di eventi al click del pulsante Completato
+    $('.complete-button').click(function() {
+      // Ottieni l ID della task dalla data attributo
+      var taskId = $(this).data('task-id');
+      var userId = $(this).data('user-id');
+
+      // Nascondi il pulsante
+      $(this).hide();
+
+      // Memorizza lo stato del pulsante nella sessione
+      sessionStorage.setItem('completeButton_' + taskId + '_' + userId, 'true');
+    });
+
+    // Verifica lo stato dei pulsanti Completato al caricamento della pagina
+    $('.complete-button').each(function() {
+      var taskId = $(this).data('task-id');
+      var userId = $(this).data('user-id');
+
+      // Controlla se il pulsante è stato premuto per questa task nella sessione
+      var isButtonPressed = sessionStorage.getItem('completeButton_' + taskId + '_' + userId);
+
+      // Se il pulsante è stato premuto, nascondilo
+      if (isButtonPressed) {
+        $(this).hide();
+      }
+    });
+  });
+ </script>
+
+
+
+
+
    <script>
       function toggleDropdown() {
           var dropdownContent = document.getElementById("myDropdown");
@@ -122,15 +155,6 @@
           }
       }
    </script>
-      <script>
-         function gestisciSelezione() {
-           var valoreSelezionato = document.getElementById("status").value;
-           console.log("Valore selezionato: " + valoreSelezionato);
-         }
-         function valoreStatus() {
-           document.getElementById("status").value = ${task_model.status};
-         }
-      </script>
    <script>
       function goToEmployeePage() {
           window.location.href = '/employee';
