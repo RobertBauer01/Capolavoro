@@ -48,7 +48,7 @@ public class UserServlet extends HttpServlet {
 			logger.info("CALLED /users/ doGet");
 			list(request, response);
 		}
-		else{
+		else {
 			Long id = Long.parseLong(pathInfo.split("/")[1]);
 			logger.info("CALLED /users/{} doGet", id);
 

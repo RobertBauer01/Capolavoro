@@ -37,8 +37,8 @@
             </button>
             <div class="dropdown-content">
 
-                <a href="#" id="openPopup">Apri Area Personale</a>
-
+                <a href="#" id="openPopup" ><i class="fas fa-cog"></i>Impostazioni</a>
+                <a href="/logout">Logout</a>
                 <div id="popup-overlay"></div>
 
                 <div id="popup">
@@ -57,11 +57,6 @@
                       <button type="submit" id="saveButton" style="display: none;">Salva</button>
                     </form>
                 </div>
-
-
-                <a href="https://www.facebook.com">Facebook</a>
-
-
             </div>
         </div>
     </div>
@@ -178,10 +173,10 @@
                                                     <td>
                                                         <c:choose>
                                                             <c:when test ="${user_model.totTaskDone == 0}">
-                                                                <span style="color: red;">New</span>
+                                                                <span style="color: red;">Added</span>
                                                             </c:when>
                                                             <c:when test="${user_model.totTaskDone != user_model.totTask }">
-                                                                <span style="color: yellow;">On going</span>
+                                                                <span style="color: orange;">On going</span>
                                                             </c:when>
                                                             <c:when test="${user_model.totTask == user_model.totTaskDone}">
                                                                 <span style="color: green;">Terminated</span>
@@ -192,6 +187,9 @@
                                                     <td>
                                                         <a id="${user_model.idUser}" class="btn btn-primary delete_button" href=""><i class="fa fa-trash"></i> Delete</a>
                                                         <a class="btn btn-primary" href="/users/${user_model.idUser}"><i class="fa fa-eye"></i> Details</a>
+                                                        <c:if test = "${user_model.rl == 1}">
+                                                            <a class="btn btn-primary" href="/user_task_details/${user_model.idUser}"><i class "fa fa-eye">👁</i> </a>
+                                                        </c:if>
                                                     </td>
                                                 </tr>
                                             </c:forEach>

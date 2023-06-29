@@ -22,7 +22,7 @@ public class Userdao {
     private static final String GET_BY_ID_QUERY = "SELECT * FROM dbo.Users WHERE id_user = ?";
     private static final String DELETE_QUERY = "DELETE FROM dbo.Users WHERE id_user = ?";
     private static final String SAVE_QUERY = "INSERT INTO dbo.Users(username, password, rl, name, surname, dt) VALUES(?, ?, ?, ?, ?, ?)";
-    private static final String GET_ALL_QUERY = "SELECT us.*, (SELECT COUNT(*) from dbo.Task_User tu WHERE tu.id_user = us.id_user) as tot_task, (SELECT COUNT(*) from dbo.Task_User tu WHERE tu.id_user = us.id_user and tu.data_completion is not null) as tot_task_done FROM dbo.Users us ORDER BY us.surname, us.name";
+    private static final String GET_ALL_QUERY = "SELECT us.*, (SELECT COUNT(*) from dbo.Task_User tu WHERE tu.id_user = us.id_user) as tot_task, (SELECT COUNT(*) from dbo.Task_User tu WHERE tu.id_user = us.id_user and tu.data_completion is not null) as tot_task_done FROM dbo.Users us ORDER BY us.rl desc, us.surname, us.name";
     private static final String SAVE_TASK_USER_QUERY = "INSERT INTO dbo.Task_User(id_task, id_user) VALUES(?, ?)";
     private static final String LAST_USER_ID_QUERY = "SELECT MAX(id_user) FROM Users";
     private static final String ACTIVE_TASKS_QUERY = "SELECT id_Task FROM Tasks WHERE status = 1";
@@ -43,21 +43,23 @@ public class Userdao {
         preparedStatement.setDate(6, model.getDt());
         preparedStatement.executeUpdate();
 
-        PreparedStatement saveStatement = connection.prepareStatement(SAVE_TASK_USER_QUERY);
-        try (Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(LAST_USER_ID_QUERY)) {
-            if (resultSet.next()) {
-                long lastID = resultSet.getLong(1);
-                saveStatement.setLong(2, lastID);
+        if (model.getRl() == 1) {
+            PreparedStatement saveStatement = connection.prepareStatement(SAVE_TASK_USER_QUERY);
+            try (Statement statement = connection.createStatement();
+                 ResultSet resultSet = statement.executeQuery(LAST_USER_ID_QUERY)) {
+                if (resultSet.next()) {
+                    long lastID = resultSet.getLong(1);
+                    saveStatement.setLong(2, lastID);
+                }
             }
-        }
-        try (Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(ACTIVE_TASKS_QUERY)) {
-            while (resultSet.next()) {
-                long taskId = resultSet.getLong("id_Task");
-                saveStatement.setLong(1, taskId);
+            try (Statement statement = connection.createStatement();
+                 ResultSet resultSet = statement.executeQuery(ACTIVE_TASKS_QUERY)) {
+                while (resultSet.next()) {
+                    long taskId = resultSet.getLong("id_Task");
+                    saveStatement.setLong(1, taskId);
 
-                saveStatement.executeUpdate();
+                    saveStatement.executeUpdate();
+                }
             }
         }
         connection.close();
