@@ -31,21 +31,6 @@
             <img src="/static/img/utente.png.png" alt="Immagine Bottone">
             </button>
             <div class="dropdown-content">
-               <div id="popup-overlay"></div>
-               <div id="popup">
-                  <div class="popup-header">
-                     <h2>Area Personale</h2>
-                     <button id="closePopup">Chiudi</button>
-                  </div>
-                  <form>
-                     <label for="benvenuto">Testo di benvenuto:</label>
-                     <input type="text" id="benvenuto" name="benvenuto" placeholder="Inserisci il testo di benvenuto" disabled>
-                     <label for="email">Email:</label>
-                     <input type="email" id="email" name="email" placeholder="Inserisci la tua email" disabled>
-                     <button type="button" id="editButton">Modifica</button>
-                     <button type="submit" id="saveButton" style="display: none;">Salva</button>
-                  </form>
-               </div>
                 <a href="/logout">Logout</a>
             </div>
          </div>
@@ -86,7 +71,7 @@
    </form>
 
    <form class="form" action="/employee" method="post">
-                <button data-task-id="${employee_model.idTask}" data-user-id="${employee_model.idUser}" type="submit" class="btn btn-primary complete-button" style="float: left; margin-right: 10px;">Completato</button>
+                <button data-task-id="${employee_model.idTask}" data-user-id="${employee_model.idUser}" type="submit" class="btn btn-primary complete-button" style="float: left; margin-right: 10px;">Complete</button>
 
                     <div class="form-group" style="visibility:hidden">
                     <span id="idTask">${employee_model.idTask}</span>
@@ -110,39 +95,29 @@
    <script src="/static/js/app/script/script.js"></script>
    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
 
- <script>
+<script>
   $(document).ready(function() {
-    // Aggiungi un gestore di eventi al click del pulsante Completato
     $('.complete-button').click(function() {
-      // Ottieni l ID della task dalla data attributo
       var taskId = $(this).data('task-id');
       var userId = $(this).data('user-id');
 
-      // Nascondi il pulsante
       $(this).hide();
 
-      // Memorizza lo stato del pulsante nella sessione
-      sessionStorage.setItem('completeButton_' + taskId + '_' + userId, 'true');
+      // Memorizza lo stato del pulsante nel localStorage
+      localStorage.setItem('completeButton_' + taskId + '_' + userId, 'true');
     });
 
-    // Verifica lo stato dei pulsanti Completato al caricamento della pagina
     $('.complete-button').each(function() {
       var taskId = $(this).data('task-id');
       var userId = $(this).data('user-id');
+      var isButtonPressed = localStorage.getItem('completeButton_' + taskId + '_' + userId);
 
-      // Controlla se il pulsante è stato premuto per questa task nella sessione
-      var isButtonPressed = sessionStorage.getItem('completeButton_' + taskId + '_' + userId);
-
-      // Se il pulsante è stato premuto, nascondilo
       if (isButtonPressed) {
         $(this).hide();
       }
     });
   });
- </script>
-
-
-
+</script>
 
 
    <script>

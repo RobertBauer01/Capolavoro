@@ -30,14 +30,13 @@
     <div class="navbar_content" >
 
         <i class="bi bi-grid"></i>
-        <i class='bx bx-sun' id="darkLight"></i>
         <div class="dropdown" style="float:right;">
             <button type="button" class="image-button">
                 <img src="/static/img/utente.png.png" alt="Immagine Bottone">
             </button>
             <div class="dropdown-content">
 
-                <a href="#" id="openPopup" ><i class="fas fa-cog"></i>Impostazioni</a>
+                <a href="#" id="openPopup" ><i class="fas fa-cog"></i>Settings</a>
                 <a href="/logout">Logout</a>
                 <div id="popup-overlay"></div>
 
@@ -83,7 +82,7 @@
                   <span class="navlink_icon">
                     <i class="bx bx-face"></i>
                   </span>
-                    <span class="navlink">Dipendenti</span>
+                    <span class="navlink">Employees</span>
                 </a>
             </li>
             <li class="item">
@@ -99,11 +98,11 @@
         <!-- Sidebar Open / Close -->
         <div class="bottom_content">
             <div class="bottom expand_sidebar">
-                <span> Espandi </span>
+                <span> Expand </span>
                 <i class='bx bx-log-in' ></i>
             </div>
             <div class="bottom collapse_sidebar">
-                <span> Riduci </span>
+                <span> Reduce </span>
                 <i class='bx bx-log-out'></i>
             </div>
         </div>
@@ -118,7 +117,7 @@
                 <!-- Sidebar content -->
             </div>
             <div class="col-md-9">
-                <h1 class="color-employee">Lista Dipendenti <button id="addEmployeeButton" class="btn btn-primary" style="float: right;">+</button></h1>
+                <h1 class="color-employee">Employees list <button id="addEmployeeButton" class="btn btn-primary" style="float: right;">+</button></h1>
             <br>
                                             <div class="row">
                                                 <div class="col-md-12">
@@ -160,7 +159,7 @@
                                                     <td>
                                                         <c:choose>
                                                             <c:when test="${user_model.rl == 1}">
-                                                                DIPENDENTE
+                                                                EMPLOYEE
                                                             </c:when>
                                                             <c:when test="${user_model.rl == 0}">
                                                                 HR
@@ -200,7 +199,7 @@
                            </div>
 
               <div id="addEmployeeForm" style="display: none;">
-                  <h2>Aggiungi Dipendente</h2>
+                  <h2>Add employee</h2>
                       <form class="form" action="users" method="post">
                           <div class="form-group">
                           <label for="username">Username</label>
@@ -223,7 +222,7 @@
                                                        <label for="rl">Role</label>
                                                        <br>
                                                       <select id="rl" name="rl" onchange="gestisciSelezione()">
-                                                          <option value="1">DIPENDENTE</option>
+                                                          <option value="1">EMPLOYEE</option>
                                                           <option value="0">HR</option>
                                                       </select>
                                                    </div>

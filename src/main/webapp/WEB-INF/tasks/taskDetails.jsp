@@ -10,7 +10,6 @@
       <!-- Boxicons CSS -->
       <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
       <title>Cruscotto HR - task-details</title>
-      <link href="/static/css/bootstrap.min.css" rel="stylesheet">
       <link rel="stylesheet" href="/static/css/style.css" type="text/css"/>
       <link rel="icon" href="/static/img/beta80favicon.png" type="image/x-icon">
       <link rel="shortcut icon" href="./img/beta80favicon.png" type="image/x-icon">
@@ -27,13 +26,12 @@
       </div>
       <div class="navbar_content" >
          <i class="bi bi-grid"></i>
-         <i class='bx bx-sun' id="darkLight"></i>
          <div class="dropdown" style="float:right;">
             <button type="button" class="image-button">
             <img src="/static/img/utente.png.png" alt="Immagine Bottone">
             </button>
             <div class="dropdown-content">
-               <a href="#" id="openPopup" ><i class="fas fa-cog"></i> Impostazioni</a>
+               <a href="#" id="openPopup" ><i class="fas fa-cog"></i>Settings</a>
                <a href="/logout">Logout</a>
                <div id="popup-overlay"></div>
                <div id="popup">
@@ -74,7 +72,7 @@
                <span class="navlink_icon">
                <i class="bx bx-face"></i>
                </span>
-               <span class="navlink">Dipendenti</span>
+               <span class="navlink">Employees</span>
                </a>
             </li>
             <li class="item">
@@ -89,11 +87,11 @@
          <!-- Sidebar Open / Close -->
          <div class="bottom_content">
             <div class="bottom expand_sidebar">
-               <span> Espandi </span>
+               <span> Expand </span>
                <i class='bx bx-log-in' ></i>
             </div>
             <div class="bottom collapse_sidebar">
-               <span> Riduci </span>
+               <span> Reduce </span>
                <i class='bx bx-log-out'></i>
             </div>
          </div>
@@ -133,8 +131,8 @@
          <label for="status">Status</label>
          <div>
             <select id="status" onchange="gestisciSelezione()" disabled>
-               <option value="1">Attivo</option>
-               <option value="0">Disattivo</option>
+               <option value="1">Active</option>
+               <option value="0">Disabled</option>
             </select>
          </div>
       </div>

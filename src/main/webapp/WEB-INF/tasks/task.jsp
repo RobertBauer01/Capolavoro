@@ -8,9 +8,6 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- Boxicons CSS -->
-    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/static/css/sb-admin-2.min.css" rel="stylesheet">
-    <link href="/static/css/app.css" rel="stylesheet">
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="/static/css/style.css" type="text/css"/>
     <link rel="icon" href="/static/img/beta80favicon.png" type="image/x-icon">
@@ -22,7 +19,7 @@
   <nav class="navbar">
     <div class="logo_item">
       <i class="bx bx-menu" id="sidebarOpen"></i>
-      <button type="button" class="image-button-nav" onclick="gotToHomePage()">
+      <button type="button" class="image-button-nav" onclick="goToHomePage()">
         <img src="/static/img/beta80favicon.png" alt="Immagine Bottone"> </i>Home Page
       </button>
     </div>
@@ -31,14 +28,13 @@
     <div class="navbar_content" >
 
       <i class="bi bi-grid"></i>
-      <i class='bx bx-sun' id="darkLight"></i>
       <div class="dropdown" style="float:right;">
         <button type="button" class="image-button">
           <img src="/static/img/utente.png.png" alt="Immagine Bottone">
         </button>
         <div class="dropdown-content">
 
-          <a href="#" id="openPopup" ><i class="fas fa-cog"></i>Impostazioni</a>
+          <a href="#" id="openPopup" ><i class="fas fa-cog"></i>Settings</a>
           <a href="/logout">Logout</a>
           <div id="popup-overlay"></div>
 
@@ -84,7 +80,7 @@
                   <span class="navlink_icon">
                     <i class="bx bx-face"></i>
                   </span>
-                    <span class="navlink">Dipendenti</span>
+                    <span class="navlink">Employees</span>
                 </a>
             </li>
             <li class="item">
@@ -99,11 +95,11 @@
         <!-- Sidebar Open / Close -->
         <div class="bottom_content">
             <div class="bottom expand_sidebar">
-                <span> Espandi </span>
+                <span> Expand </span>
                 <i class='bx bx-log-in' ></i>
             </div>
             <div class="bottom collapse_sidebar">
-                <span> Riduci </span>
+                <span> Reduce </span>
                 <i class='bx bx-log-out'></i>
             </div>
         </div>
@@ -118,7 +114,7 @@
                 <!-- Sidebar content -->
             </div>
             <div class="col-md-9">
-                <h1 class="color-employee">Lista task <button id="addEmployeeButton" class="btn btn-primary" style="float: right;">+</button></h1>
+                <h1 class="color-employee">Task list<button id="addEmployeeButton" class="btn btn-primary" style="float: right;">+</button></h1>
                 <div class="row">
                 <br>
                     <div class="col-md-12">
@@ -159,10 +155,10 @@
                                         <td>
                                             <c:choose>
                                                 <c:when test="${task.status == 1}">
-                                                    Attivo
+                                                    Active
                                                 </c:when>
                                                 <c:when test="${task.status == 0}">
-                                                    Disattivo
+                                                    Disabled
                                                 </c:when>
                                             </c:choose>
                                         </td>
@@ -181,7 +177,7 @@
             <div id="addEmployeeForm" style="display: none;">
 
                                     <form class="form" action="task" method="post" onsubmit="return validateForm()">
-                                                <div class="form-group"><h2 class="color-employee">Aggiunta Task</h2>
+                                                <div class="form-group"><h2 class="color-employee">Add task</h2>
                                                 <br>
                                                     <label for="title">Title</label>
                                                     <input id="title" type="text" name="title" class="form-control" required>

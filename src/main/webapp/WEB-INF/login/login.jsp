@@ -14,20 +14,20 @@
     <div class="container">
         <div class="login-left">
             <div class="login-header">
-                <h1>BENVENUTO</h1>
-                <p>Perfavore loggati alla piattaforma</p>
+                <h1>WELCOME</h1>
+                <p>Please log in to the platform</p>
             </div>
             <form class="login-form" action="login" method="post">
                 <div class="login-form-content">
                     <div class="form-item">
                         <label for="username">Username</label>
-                        <input id="username" type="text" name="username" placeholder="Inserire Username" class="form-control" required>
+                        <input id="username" type="text" name="username" placeholder="Enter Username" class="form-control" required>
                     </div>
                     <div class="form-item">
                         <label for="password">Password</label>
-                        <input id="password" type="password" name="password" placeholder="Inserire password" class="form-control" required>
+                        <input id="password" type="password" name="password" placeholder="Enter password" class="form-control" required>
                     </div>
-                    <input type="submit" class="btn btn-primary"/>
+                    <input type="submit" class="btn btn-primary" value="SUBMIT"/>
                 </div>
             </form>
         </div>

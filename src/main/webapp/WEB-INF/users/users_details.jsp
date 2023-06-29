@@ -32,14 +32,13 @@
     <div class="navbar_content" >
 
         <i class="bi bi-grid"></i>
-        <i class='bx bx-sun' id="darkLight"></i>
         <div class="dropdown" style="float:right;">
             <button type="button" class="image-button">
                 <img src="/static/img/utente.png.png" alt="Immagine Bottone">
             </button>
             <div class="dropdown-content">
 
-                <a href="#" id="openPopup" ><i class="fas fa-cog"></i>Impostazioni</a>
+                <a href="#" id="openPopup" ><i class="fas fa-cog"></i>Settings</a>
                 <a href="/logout">Logout</a>
                 <div id="popup-overlay"></div>
 
@@ -85,7 +84,7 @@
                   <span class="navlink_icon">
                     <i class="bx bx-face"></i>
                   </span>
-                    <span class="navlink">Dipendenti</span>
+                    <span class="navlink">Employees</span>
                 </a>
             </li>
             <li class="item">
@@ -101,11 +100,11 @@
         <!-- Sidebar Open / Close -->
         <div class="bottom_content">
             <div class="bottom expand_sidebar">
-                <span> Espandi </span>
+                <span> Expand </span>
                 <i class='bx bx-log-in' ></i>
             </div>
             <div class="bottom collapse_sidebar">
-                <span> Riduci </span>
+                <span> Reduce </span>
                 <i class='bx bx-log-out'></i>
             </div>
         </div>
@@ -148,7 +147,7 @@
                                      <label for="rl">Role</label>
                                     <br>
                                     <select id="rl" disabled>
-                                      <option value="1" ${user_model.rl == 1 ? '' : 'selected'}>DIPENDENTE</option>
+                                      <option value="1" ${user_model.rl == 1 ? '' : 'selected'}>EMPLOYEE</option>
                                       <option value="0" ${user_model.rl == 0 ? 'selected' : ''}>HR</option>
                                     </select>
                                 </div>

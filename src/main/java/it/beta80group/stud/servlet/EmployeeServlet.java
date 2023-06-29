@@ -115,6 +115,7 @@ public class EmployeeServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpServletResponse res = (HttpServletResponse) response;
         logger.info("CALLED /employee/ doPost");
         String idTask = request.getParameter("idTask");
         String idUser = request.getParameter("idUser");
@@ -129,7 +130,6 @@ public class EmployeeServlet extends HttpServlet {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/employee/employee.jsp");
-        dispatcher.forward(request, response);
+        res.sendRedirect("/employee");
     }
 }
