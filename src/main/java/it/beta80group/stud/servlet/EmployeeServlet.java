@@ -51,10 +51,10 @@ public class EmployeeServlet extends HttpServlet {
             list(request, response);
         }
         else{
-            Long id = Long.parseLong(pathInfo.split("/")[1]);
-            logger.info("CALLED /employee/{} doGet", id);
+            Long idTask = Long.parseLong(pathInfo.split("/")[1]);
+            logger.info("CALLED /employee/{} doGet", idTask);
 
-            details(id, request, response);
+            details(idTask, request, response);
         }
     }
 
@@ -92,6 +92,7 @@ public class EmployeeServlet extends HttpServlet {
         try {
             Long idLog = (Long) request.getSession().getAttribute("idLoggedUser");
             employee = empService.getById(id,idLog);
+            employee.setIdUser(idLog);
             if(employee != null){
                 dispatcher = request.getRequestDispatcher("/WEB-INF/employee/employee_details.jsp");
                 request.setAttribute("employee_model", employee);
