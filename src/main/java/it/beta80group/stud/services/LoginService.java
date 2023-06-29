@@ -77,6 +77,7 @@ public class LoginService {
                     .setSigningKey(getSigningKey())
                     .build()
                     .parseClaimsJws(jwtCookieValue);
+            logger.info(claimsJws.getBody().getOrDefault("type", null));
             Date expiration = claimsJws.getBody().getExpiration();
             Date now = Calendar.getInstance().getTime();
             if(expiration.before(now)){

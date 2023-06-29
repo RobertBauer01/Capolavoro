@@ -45,8 +45,8 @@ public class LoginServlet extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         UserInfo ui = loginService.doLogin(username, loginService.cryptPassword(password));
-        request.getSession().setAttribute("idLoggedUser", ui.getIdLoggedUser());
         if(ui != null){
+            request.getSession().setAttribute("idLoggedUser", ui.getIdLoggedUser());
             String token = loginService.createToken(ui);
             logger.info("login token {}", token);
             Cookie c = new Cookie(JWTTOK, token);
@@ -62,6 +62,7 @@ public class LoginServlet extends HttpServlet {
             }
             return;
         }
+
         logger.info("CALLED /login doPost {} {}", username, password);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/login/login.jsp");
         dispatcher.forward(request, response);
