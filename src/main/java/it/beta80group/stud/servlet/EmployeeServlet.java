@@ -65,15 +65,16 @@ public class EmployeeServlet extends HttpServlet {
         List<Employee> list;
         Employee employee = null;
         try {
-
-            list = empService.list(190L);
+            Long idLog = (Long) request.getSession().getAttribute("idLoggedUser");
+            list = empService.list(idLog);
             request.setAttribute("employee_list", list);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
         try {
-            employee=empService.user(190L);
+            Long idLog = (Long) request.getSession().getAttribute("idLoggedUser");
+            employee=empService.user(idLog);
             request.setAttribute("empmodel", employee);
 
         } catch (SQLException ee) {
@@ -89,7 +90,8 @@ public class EmployeeServlet extends HttpServlet {
         Employee employee = null;
         RequestDispatcher dispatcher = null;
         try {
-            employee = empService.getById(id);
+            Long idLog = (Long) request.getSession().getAttribute("idLoggedUser");
+            employee = empService.getById(id,idLog);
             if(employee != null){
                 dispatcher = request.getRequestDispatcher("/WEB-INF/employee/employee_details.jsp");
                 request.setAttribute("employee_model", employee);
@@ -119,9 +121,9 @@ public class EmployeeServlet extends HttpServlet {
         logger.info("stringa idUser: " + idUser);
         List<Employee> list;
         try {
-
+            Long idLog = (Long) request.getSession().getAttribute("idLoggedUser");
             empService.update(idTask,idUser);
-            list = empService.list(190L);
+            list = empService.list(idLog);
             request.setAttribute("employee_list", list);
         } catch (SQLException e) {
             throw new RuntimeException(e);

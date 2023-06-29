@@ -46,8 +46,8 @@ public class EmployeeService {
         Employeedao.update(employee);
     }
 
-    public Employee getById(Long id) throws SQLException {
-        Employee byId = Employeedao.getById(id,190L);
+    public Employee getById(Long id,Long idUser) throws SQLException {
+        Employee byId = Employeedao.getById(id,idUser);
         return byId;
     }
 

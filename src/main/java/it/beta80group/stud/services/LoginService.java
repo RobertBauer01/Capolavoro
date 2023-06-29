@@ -49,6 +49,7 @@ public class LoginService {
                 ui = new UserInfo();
                 ui.setUserType(user.getRl());
                 ui.setUsername(username);
+                ui.setIdLoggedUser(user.getIdUser());
             }
             return ui;
         }catch (Exception e){

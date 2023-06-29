@@ -6,8 +6,17 @@ import java.util.Map;
 public class UserInfo {
     private String username;
     private Long userType;
+    private Long id_user;
 
     public UserInfo() {
+    }
+
+    public Long getIdLoggedUser() {
+        return id_user;
+    }
+
+    public void setIdLoggedUser(Long id_user) {
+        this.id_user = id_user;
     }
 
     public String getUsername() {

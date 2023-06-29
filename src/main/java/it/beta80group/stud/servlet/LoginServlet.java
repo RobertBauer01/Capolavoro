@@ -45,6 +45,7 @@ public class LoginServlet extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         UserInfo ui = loginService.doLogin(username, loginService.cryptPassword(password));
+        request.getSession().setAttribute("idLoggedUser", ui.getIdLoggedUser());
         if(ui != null){
             String token = loginService.createToken(ui);
             logger.info("login token {}", token);
