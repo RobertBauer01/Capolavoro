@@ -31,7 +31,8 @@
             <img src="/static/img/utente.png.png" alt="Immagine Bottone">
             </button>
             <div class="dropdown-content">
-               <a href="#" id="openPopup">Apri Area Personale</a>
+               <a href="#" id="openPopup" ><i class="fas fa-cog"></i> Impostazioni</a>
+               <a href="/logout">Logout</a>
                <div id="popup-overlay"></div>
                <div id="popup">
                   <div class="popup-header">
@@ -47,8 +48,6 @@
                      <button type="submit" id="saveButton" style="display: none;">Salva</button>
                   </form>
                </div>
-               <a href="https://www.facebook.com">Facebook</a>
-               <a href="https://www.youtube.com">YouTube</a>
             </div>
          </div>
       </div>
